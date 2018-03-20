@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class RocketShip : MonoBehaviour {
     private Rigidbody rigidBody;
+    private AudioSource audioSource;
 
     [SerializeField]
     private float thrust = 1;
 
 	void Start () {
         rigidBody = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
 	}
 	
 	void Update () {
@@ -22,6 +24,14 @@ public class RocketShip : MonoBehaviour {
         if (Input.GetKey(KeyCode.Space))
         {
             rigidBody.AddRelativeForce(Vector3.up * thrust);
+            if(!audioSource.isPlaying)
+                audioSource.Play();  
+        } else
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
         }
 
         if (Input.GetKey(KeyCode.A))
