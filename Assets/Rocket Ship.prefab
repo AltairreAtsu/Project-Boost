@@ -496,7 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a859ad4a04d1c4d8322a4377c3b9f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainThrust: 14
+  mainThrust: 800
   rcsThrust: 60
   loadDelay: 1
   mainThrustParticles: {fileID: 198887831202274550}
