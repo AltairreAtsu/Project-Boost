@@ -8,7 +8,9 @@ public class RocketShip : MonoBehaviour {
     private AudioSource audioSource;
 
     [SerializeField]
-    private float thrust = 1;
+    private float mainThrust = 1;
+    [SerializeField]
+    private float rcsThrust = 1;
 
 	void Start () {
         rigidBody = GetComponent<Rigidbody>();
@@ -16,32 +18,52 @@ public class RocketShip : MonoBehaviour {
 	}
 	
 	void Update () {
-        ProcessInput();
+        Thrust();
+        Rotate();
 	}
 
-    private void ProcessInput()
+    private void OnCollisionEnter(Collision collision)
     {
-        if (Input.GetKey(KeyCode.Space))
+        if(collision.gameObject.tag == "Friendly")
         {
-            rigidBody.AddRelativeForce(Vector3.up * thrust);
-            if(!audioSource.isPlaying)
-                audioSource.Play();  
+            // Do Nothing
+            print("Okay!");
         } else
         {
-            if (audioSource.isPlaying)
-            {
-                audioSource.Stop();
-            }
+            print("Dead!");
         }
+    }
+
+    private void Rotate()
+    {
+        rigidBody.freezeRotation = true;
+
+        float rotationThisFrame = rcsThrust * Time.deltaTime;
 
         if (Input.GetKey(KeyCode.A))
         {
-            transform.Rotate(Vector3.forward);
+            transform.Rotate(Vector3.forward * rotationThisFrame);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            transform.Rotate(Vector3.back);
+            transform.Rotate(-Vector3.forward * rotationThisFrame);
         }
 
+        rigidBody.freezeRotation = false;
+    }
+
+    private void Thrust()
+    {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            rigidBody.AddRelativeForce(Vector3.up * mainThrust);
+            if (!audioSource.isPlaying)
+                audioSource.Play();
+        }
+        else
+        {
+            if (audioSource.isPlaying)
+                audioSource.Stop();
+        }
     }
 }
