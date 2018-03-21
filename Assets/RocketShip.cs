@@ -16,6 +16,10 @@ public class RocketShip : MonoBehaviour {
 	[Space]
 	[SerializeField] private float loadDelay = 1f;
 	[Space]
+	[SerializeField] private ParticleSystem mainThrustParticles = null;
+	[SerializeField] private ParticleSystem deathParticles = null;
+	[SerializeField] private ParticleSystem sucessParticles = null;
+	[Space]
 	[SerializeField] private AudioClip mainThrustSfx = null;
 	[SerializeField] private AudioClip deathSfx = null;
 	[SerializeField] private AudioClip jingleSfx = null;
@@ -55,16 +59,20 @@ public class RocketShip : MonoBehaviour {
 
 	private void StartSucessSequence()
 	{
+		mainThrustParticles.Stop();
 		audioSource.Stop();
 		audioSource.PlayOneShot(jingleSfx);
+		sucessParticles.Play();
 		state = State.Trancending;
 		Invoke("LoadNextScene", loadDelay + jingleSfx.length);
 	}
 
 	private void StartDeathSequence()
 	{
+		mainThrustParticles.Stop();
 		audioSource.Stop();
 		audioSource.PlayOneShot(deathSfx);
+		deathParticles.Play();
 		state = State.Dying;
 		Invoke("LoadFirstLevel", loadDelay + deathSfx.length);
 	}
@@ -96,6 +104,7 @@ public class RocketShip : MonoBehaviour {
 		else
         {
 			audioSource.Stop();
+			mainThrustParticles.Stop();
         }
     }
 
@@ -104,6 +113,7 @@ public class RocketShip : MonoBehaviour {
 		rigidBody.AddRelativeForce(Vector3.up * mainThrust);
 		if (!audioSource.isPlaying)
 			audioSource.PlayOneShot(mainThrustSfx);
+		mainThrustParticles.Play();
 	}
 
 	private void LoadNextScene()
