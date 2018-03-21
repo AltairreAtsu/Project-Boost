@@ -2,15 +2,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class RocketShip : MonoBehaviour {
     private Rigidbody rigidBody;
     private AudioSource audioSource;
 
+    enum State { Alive, Dying, Trancending}
+    State state = State.Alive;
+
     [SerializeField]
     private float mainThrust = 1;
     [SerializeField]
     private float rcsThrust = 1;
+	[Space]
+	[SerializeField]
+	private float loadDelay = 1f;
+	[Space]
+	[SerializeField]
+	private AudioClip mainThrustSfx = null;
+	[SerializeField]
+	private AudioClip deathSfx = null;
+	[SerializeField]
+	private AudioClip jingleSfx = null;
+
 
 	void Start () {
         rigidBody = GetComponent<Rigidbody>();
@@ -18,23 +33,37 @@ public class RocketShip : MonoBehaviour {
 	}
 	
 	void Update () {
-        Thrust();
-        Rotate();
+		if (state != State.Dying)
+		{
+			Thrust();
+			Rotate();
+		}
+
 	}
 
     private void OnCollisionEnter(Collision collision)
     {
+		if (state != State.Alive) { return; }
+
         if(collision.gameObject.tag == "Friendly")
         {
             // Do Nothing
             print("Okay!");
-        } else
+        } else if (collision.gameObject.tag == "Finish")
         {
-            print("Dead!");
+			state = State.Trancending;
+			Invoke("LoadNextScene", loadDelay);
         }
-    }
+        else
+		{
+			state = State.Dying;
+			audioSource.Stop();
+			Invoke("LoadFirstLevel", loadDelay);
+		}
+	}
 
-    private void Rotate()
+
+	private void Rotate()
     {
         rigidBody.freezeRotation = true;
 
@@ -66,4 +95,17 @@ public class RocketShip : MonoBehaviour {
                 audioSource.Stop();
         }
     }
+
+	private void LoadNextScene()
+	{
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+		state = State.Alive;
+	}
+
+	private void LoadFirstLevel()
+	{
+		SceneManager.LoadScene(0);
+		state = State.Alive;
+	}
+
 }
