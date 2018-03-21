@@ -11,20 +11,14 @@ public class RocketShip : MonoBehaviour {
     enum State { Alive, Dying, Trancending}
     State state = State.Alive;
 
-    [SerializeField]
-    private float mainThrust = 1;
-    [SerializeField]
-    private float rcsThrust = 1;
+    [SerializeField] private float mainThrust = 1;
+    [SerializeField] private float rcsThrust = 1;
 	[Space]
-	[SerializeField]
-	private float loadDelay = 1f;
+	[SerializeField] private float loadDelay = 1f;
 	[Space]
-	[SerializeField]
-	private AudioClip mainThrustSfx = null;
-	[SerializeField]
-	private AudioClip deathSfx = null;
-	[SerializeField]
-	private AudioClip jingleSfx = null;
+	[SerializeField] private AudioClip mainThrustSfx = null;
+	[SerializeField] private AudioClip deathSfx = null;
+	[SerializeField] private AudioClip jingleSfx = null;
 
 
 	void Start () {
@@ -33,10 +27,10 @@ public class RocketShip : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (state != State.Dying)
+		if (state == State.Alive)
 		{
-			Thrust();
-			Rotate();
+			RespondToThrustInput();
+			RespondToRotationInput();
 		}
 
 	}
@@ -45,25 +39,37 @@ public class RocketShip : MonoBehaviour {
     {
 		if (state != State.Alive) { return; }
 
-        if(collision.gameObject.tag == "Friendly")
-        {
-            // Do Nothing
-            print("Okay!");
-        } else if (collision.gameObject.tag == "Finish")
-        {
-			state = State.Trancending;
-			Invoke("LoadNextScene", loadDelay);
-        }
-        else
+        switch (collision.gameObject.tag)
 		{
-			state = State.Dying;
-			audioSource.Stop();
-			Invoke("LoadFirstLevel", loadDelay);
+			case "Friendly":
+				print("Okay!");
+				break;
+			case "Finish":
+				StartSucessSequence();
+				break;
+			default:
+				StartDeathSequence();
+				break;
 		}
 	}
 
+	private void StartSucessSequence()
+	{
+		audioSource.Stop();
+		audioSource.PlayOneShot(jingleSfx);
+		state = State.Trancending;
+		Invoke("LoadNextScene", loadDelay + jingleSfx.length);
+	}
 
-	private void Rotate()
+	private void StartDeathSequence()
+	{
+		audioSource.Stop();
+		audioSource.PlayOneShot(deathSfx);
+		state = State.Dying;
+		Invoke("LoadFirstLevel", loadDelay + deathSfx.length);
+	}
+
+	private void RespondToRotationInput()
     {
         rigidBody.freezeRotation = true;
 
@@ -81,20 +87,24 @@ public class RocketShip : MonoBehaviour {
         rigidBody.freezeRotation = false;
     }
 
-    private void Thrust()
+    private void RespondToThrustInput()
     {
         if (Input.GetKey(KeyCode.Space))
+		{
+			ApplyThrust();
+		}
+		else
         {
-            rigidBody.AddRelativeForce(Vector3.up * mainThrust);
-            if (!audioSource.isPlaying)
-                audioSource.Play();
-        }
-        else
-        {
-            if (audioSource.isPlaying)
-                audioSource.Stop();
+			audioSource.Stop();
         }
     }
+
+	private void ApplyThrust()
+	{
+		rigidBody.AddRelativeForce(Vector3.up * mainThrust);
+		if (!audioSource.isPlaying)
+			audioSource.PlayOneShot(mainThrustSfx);
+	}
 
 	private void LoadNextScene()
 	{
