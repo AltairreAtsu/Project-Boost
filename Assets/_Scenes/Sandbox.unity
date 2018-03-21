@@ -1245,7 +1245,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementVector: {x: 20, y: 0, z: 0}
   period: 3
-  movmentFactor: 0
   debugSphereRadius: 0.5
 --- !u!23 &623307205
 MeshRenderer:

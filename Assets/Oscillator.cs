@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Oscillator : MonoBehaviour {
+public class Oscillator : MonoBehaviour
+{
 
 	[SerializeField] private Vector3 movementVector = new Vector3(10f, 0, 0);
 	[SerializeField] private float period = 2f;
@@ -13,12 +14,19 @@ public class Oscillator : MonoBehaviour {
 	private Vector3 startingPos;
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
 		startingPos = transform.position;
+		if (period <= Mathf.Epsilon)
+		{
+			Debug.LogError(gameObject.name + ": Ossilation Period must be greater than 0!");
+			this.enabled = false;
+		}
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
 		float cycles = Time.time / period;
 
 		const float tau = Mathf.PI * 2;
