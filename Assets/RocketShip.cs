@@ -124,8 +124,21 @@ public class RocketShip : MonoBehaviour {
 
 	private void LoadFirstLevel()
 	{
-		SceneManager.LoadScene(0);
+		if (SceneManager.GetActiveScene().buildIndex == 4)
+		{
+			Quit();
+			return;
+		}
+			
+
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		state = State.Alive;
+	}
+
+	//TEMP
+	public void Quit()
+	{
+		Application.Quit();
 	}
 
 }
