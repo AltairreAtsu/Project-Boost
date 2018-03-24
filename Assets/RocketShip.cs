@@ -61,8 +61,8 @@ public class RocketShip : MonoBehaviour {
 	{
 		if (state != State.Alive) { return; }
 		
-		// TO DO add other triggers
-		StartDeathSequence();
+		if(other.tag != "Friendly")
+			StartDeathSequence();
 	}
 
 	private void StartSucessSequence()

@@ -7,6 +7,7 @@ public class Hazard : MonoBehaviour {
 	[SerializeField] private float fireDurration = 1f;
 	[SerializeField] private float tellDurration = 1f;
 	[SerializeField] private float primaryDelay = 1f;
+	[Space]
 	[SerializeField] private ParticleSystem firingSystem = null;
 	[SerializeField] private ParticleSystem primingSystem = null;
 
