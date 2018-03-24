@@ -14,7 +14,6 @@ public class MovingWall : MonoBehaviour {
 
 	void Start () {
 		startingPos = transform.position;
-		active = false;
 	}
 	
 	// Update is called once per frame
