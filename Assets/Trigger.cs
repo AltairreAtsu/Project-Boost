@@ -18,7 +18,7 @@ public class Trigger : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if(!target.IsTriggered())
+		if(!target.IsTriggered() && other.tag == "Player")
 			target.Trigger();
 	}
 }
