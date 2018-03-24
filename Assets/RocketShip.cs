@@ -57,6 +57,14 @@ public class RocketShip : MonoBehaviour {
 		}
 	}
 
+	private void OnTriggerEnter(Collider other)
+	{
+		if (state != State.Alive) { return; }
+		
+		// TO DO add other triggers
+		StartDeathSequence();
+	}
+
 	private void StartSucessSequence()
 	{
 		mainThrustParticles.Stop();
@@ -118,19 +126,18 @@ public class RocketShip : MonoBehaviour {
 
 	private void LoadNextScene()
 	{
+		if (SceneManager.GetActiveScene().buildIndex == 4)
+		{
+			Quit();
+			return;
+		}
+
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 		state = State.Alive;
 	}
 
 	private void LoadFirstLevel()
 	{
-		if (SceneManager.GetActiveScene().buildIndex == 4)
-		{
-			Quit();
-			return;
-		}
-			
-
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		state = State.Alive;
 	}

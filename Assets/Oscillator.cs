@@ -38,7 +38,7 @@ public class Oscillator : MonoBehaviour
 
 	private void OnDrawGizmos()
 	{
-		if (startingPos == Vector3.zero)
+		if (startingPos != transform.position)
 			startingPos = transform.position;
 
 		Gizmos.color = Color.yellow;
