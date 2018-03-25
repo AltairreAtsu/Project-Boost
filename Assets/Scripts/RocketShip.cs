@@ -14,7 +14,7 @@ public class RocketShip : MonoBehaviour {
     private State state = State.Alive;
 
 	public enum PowerUpTypes { Heatshield, None }
-	private PowerUpTypes powerUp;
+	private PowerUpTypes powerUp = PowerUpTypes.None;
 
     [SerializeField] private float mainThrust = 1f;
     [SerializeField] private float rcsThrust = 1f;
@@ -216,7 +216,7 @@ public class RocketShip : MonoBehaviour {
 
 	public void AwardPowerUp(PowerUpTypes powerUp)
 	{
-		if (this.powerUp != PowerUpTypes.None) this.powerUp = powerUp;
+		if (this.powerUp == PowerUpTypes.None) this.powerUp = powerUp;
 	}
 
 	//TEMP
