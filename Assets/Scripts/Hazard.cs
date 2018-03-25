@@ -18,7 +18,7 @@ public class Hazard : MonoBehaviour {
 
 	private CapsuleCollider hazardCollider = null;
 
-	private void Start()
+	protected void Start()
 	{
 		if (firingSystem == null || primingSystem == null)
 		{

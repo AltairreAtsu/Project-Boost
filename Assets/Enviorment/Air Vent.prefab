@@ -58,9 +58,10 @@ GameObject:
   - component: {fileID: 65770728451174308}
   - component: {fileID: 136416151275450326}
   - component: {fileID: 114403402544314142}
+  - component: {fileID: 114712313385857088}
   m_Layer: 0
   m_Name: Air Vent
-  m_TagString: Air
+  m_TagString: Trigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -175,6 +176,18 @@ MonoBehaviour:
   primaryDelay: 1
   firingSystem: {fileID: 198342381046250274}
   primingSystem: {fileID: 198514531151194270}
+--- !u!114 &114712313385857088
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1168547722778994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f98178cff60374bbed24d01a494b7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recoilAmount: 300
 --- !u!136 &136416151275450326
 CapsuleCollider:
   m_ObjectHideFlags: 1

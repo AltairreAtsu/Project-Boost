@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class RocketShip : MonoBehaviour {
@@ -13,12 +10,14 @@ public class RocketShip : MonoBehaviour {
 	[SerializeField] private bool heatShield = false;
 	private float immunityTimeStep = 0f;
 
-    enum State { Alive, Dying, Trancending}
-    State state = State.Alive;
+    private enum State { Alive, Dying, Trancending}
+    private State state = State.Alive;
+
+	public enum PowerUpTypes { Heatshield, None }
+	private PowerUpTypes powerUp;
 
     [SerializeField] private float mainThrust = 1f;
     [SerializeField] private float rcsThrust = 1f;
-	[SerializeField] private float recoailAmount = 1f;
 	[Space]
 	[SerializeField] private float loadDelay = 1f;
 	[Space]
@@ -44,6 +43,7 @@ public class RocketShip : MonoBehaviour {
 		{
 			RespondToThrustInput();
 			RespondToRotationInput();
+			RespondToPowerUpInput();
 			DoPowerUpTick();
 			if (Application.isEditor)
 				RespondToDebugInput();
@@ -72,28 +72,27 @@ public class RocketShip : MonoBehaviour {
 	private void OnTriggerEnter(Collider other)
 	{
 		if (state != State.Alive) { return; }
-		
-		if(other.tag != "Trigger" && other.tag != "Air")
+		if (other.tag == "Fire" && heatShield) { return; }
+
+		if (other.tag != "Trigger")
 		{
-			if(other.tag == "Fire" && heatShield)
-			{
-				return;
-			}
 			StartDeathSequence();
 		}
 	}
 
 	private void OnTriggerStay(Collider other)
 	{
-		if(other.tag=="Air")
+		AirHazard airHazard = other.GetComponent<AirHazard>();
+
+		if (airHazard != null)
 		{
-			Recoil(other.transform.up);
+			Recoil(other.transform.up, airHazard.GetRecoil());
 		}
 	}
 
-	private void Recoil(Vector3 dir)
+	private void Recoil(Vector3 dir, float recoilAmount)
 	{
-		rigidBody.AddRelativeForce(dir * recoailAmount * Time.deltaTime);
+		rigidBody.AddRelativeForce(dir * recoilAmount * Time.deltaTime);
 	}
 
 	private void StartSucessSequence()
@@ -171,6 +170,22 @@ public class RocketShip : MonoBehaviour {
 		}
 	}
 
+	private void RespondToPowerUpInput()
+	{
+		if (Input.GetKeyDown(KeyCode.E))
+		{
+			switch (powerUp)
+			{
+				case PowerUpTypes.None:
+					break;
+				case PowerUpTypes.Heatshield:
+					TriggerHeatShield();
+					powerUp = PowerUpTypes.None;
+					break;
+			}
+		}
+	}
+
 	private void DoPowerUpTick()
 	{
 		if(heatShield && Time.time - immunityTimeStep >= heatShieldDurration)
@@ -192,11 +207,16 @@ public class RocketShip : MonoBehaviour {
 		state = State.Alive;
 	}
 
-	public void TriggerHeatShield()
+	private void TriggerHeatShield()
 	{
 		heatShield = true;
 		shield.enabled = true;
 		immunityTimeStep = Time.time;
+	}
+
+	public void AwardPowerUp(PowerUpTypes powerUp)
+	{
+		if (this.powerUp != PowerUpTypes.None) this.powerUp = powerUp;
 	}
 
 	//TEMP
