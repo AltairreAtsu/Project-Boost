@@ -6,6 +6,7 @@ public class CameraPan : MonoBehaviour {
 
 	[SerializeField] private Transform target = null;
 	[SerializeField] private bool panUp = false;
+	[SerializeField] private bool multiPan = false;
 	private Vector3 differentialVetcor;
 
 
@@ -19,6 +20,10 @@ public class CameraPan : MonoBehaviour {
 		if (panUp)
 		{
 			transform.position = new Vector3(transform.position.x, target.position.y + differentialVetcor.y, transform.position.z);
+		}
+		else if (multiPan)
+		{
+			transform.position = new Vector3(differentialVetcor.x + target.position.x, target.position.y + differentialVetcor.y, transform.position.z);
 		}
 		else
 		{

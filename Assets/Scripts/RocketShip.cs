@@ -8,6 +8,8 @@ public class RocketShip : MonoBehaviour {
     private Rigidbody rigidBody;
     private AudioSource audioSource;
 
+	private bool invulnerable = false;
+
     enum State { Alive, Dying, Trancending}
     State state = State.Alive;
 
@@ -35,13 +37,15 @@ public class RocketShip : MonoBehaviour {
 		{
 			RespondToThrustInput();
 			RespondToRotationInput();
+			if (Application.isEditor)
+				RespondToDebugInput();
 		}
 
 	}
 
     private void OnCollisionEnter(Collision collision)
     {
-		if (state != State.Alive) { return; }
+		if (state != State.Alive || invulnerable) { return; }
 
         switch (collision.gameObject.tag)
 		{
@@ -124,14 +128,20 @@ public class RocketShip : MonoBehaviour {
 		mainThrustParticles.Play();
 	}
 
+	private void RespondToDebugInput()
+	{
+		if( Input.GetKeyDown(KeyCode.C))
+		{
+			invulnerable = !invulnerable;
+		}
+		if (Input.GetKeyDown(KeyCode.L))
+		{
+			LoadNextScene();
+		}
+	}
+
 	private void LoadNextScene()
 	{
-		if (SceneManager.GetActiveScene().buildIndex == 4)
-		{
-			Quit();
-			return;
-		}
-
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 		state = State.Alive;
 	}
