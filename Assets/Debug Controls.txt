@@ -1,0 +1,3 @@
+C - Disable Death on Collision
+L - Load Next Level (Same as Landing on Platform)
+H - Trigger Heat Shield

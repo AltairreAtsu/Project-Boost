@@ -1,5 +1,7 @@
 fileFormatVersion: 2
 guid: af625659eb6fd2349ae4b390578f9632
+labels:
+- Hazard
 timeCreated: 1521916718
 licenseType: Free
 NativeFormatImporter:

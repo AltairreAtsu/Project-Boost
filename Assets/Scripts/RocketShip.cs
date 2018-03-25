@@ -10,13 +10,19 @@ public class RocketShip : MonoBehaviour {
 
 	private bool invulnerable = false;
 
+	[SerializeField] private bool heatShield = false;
+	private float immunityTimeStep = 0f;
+
     enum State { Alive, Dying, Trancending}
     State state = State.Alive;
 
-    [SerializeField] private float mainThrust = 1;
-    [SerializeField] private float rcsThrust = 1;
+    [SerializeField] private float mainThrust = 1f;
+    [SerializeField] private float rcsThrust = 1f;
+	[SerializeField] private float recoailAmount = 1f;
 	[Space]
 	[SerializeField] private float loadDelay = 1f;
+	[Space]
+	[SerializeField] private float heatShieldDurration = 2.5f;
 	[Space]
 	[SerializeField] private ParticleSystem mainThrustParticles = null;
 	[SerializeField] private ParticleSystem deathParticles = null;
@@ -25,7 +31,8 @@ public class RocketShip : MonoBehaviour {
 	[SerializeField] private AudioClip mainThrustSfx = null;
 	[SerializeField] private AudioClip deathSfx = null;
 	[SerializeField] private AudioClip jingleSfx = null;
-
+	[Space]
+	[SerializeField] private MeshRenderer shield = null;
 
 	void Start () {
         rigidBody = GetComponent<Rigidbody>();
@@ -37,6 +44,7 @@ public class RocketShip : MonoBehaviour {
 		{
 			RespondToThrustInput();
 			RespondToRotationInput();
+			DoPowerUpTick();
 			if (Application.isEditor)
 				RespondToDebugInput();
 		}
@@ -65,8 +73,27 @@ public class RocketShip : MonoBehaviour {
 	{
 		if (state != State.Alive) { return; }
 		
-		if(other.tag != "Friendly")
+		if(other.tag != "Trigger" && other.tag != "Air")
+		{
+			if(other.tag == "Fire" && heatShield)
+			{
+				return;
+			}
 			StartDeathSequence();
+		}
+	}
+
+	private void OnTriggerStay(Collider other)
+	{
+		if(other.tag=="Air")
+		{
+			Recoil(other.transform.up);
+		}
+	}
+
+	private void Recoil(Vector3 dir)
+	{
+		rigidBody.AddRelativeForce(dir * recoailAmount * Time.deltaTime);
 	}
 
 	private void StartSucessSequence()
@@ -138,6 +165,19 @@ public class RocketShip : MonoBehaviour {
 		{
 			LoadNextScene();
 		}
+		if (Input.GetKeyDown(KeyCode.H))
+		{
+			TriggerHeatShield();
+		}
+	}
+
+	private void DoPowerUpTick()
+	{
+		if(heatShield && Time.time - immunityTimeStep >= heatShieldDurration)
+		{
+			heatShield = false;
+			shield.enabled = false;
+		}
 	}
 
 	private void LoadNextScene()
@@ -150,6 +190,13 @@ public class RocketShip : MonoBehaviour {
 	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		state = State.Alive;
+	}
+
+	public void TriggerHeatShield()
+	{
+		heatShield = true;
+		shield.enabled = true;
+		immunityTimeStep = Time.time;
 	}
 
 	//TEMP
