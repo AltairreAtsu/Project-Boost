@@ -278,7 +278,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1219206681233478}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -39.03, y: 7.87, z: -3.06}
+  m_LocalPosition: {x: -17.79, y: 32.183365, z: -0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4559103382678356}
@@ -615,7 +615,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967279
   m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -634,10 +634,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a859ad4a04d1c4d8322a4377c3b9f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatShield: 0
   mainThrust: 800
   rcsThrust: 60
-  recoailAmount: 800
+  waterGravity: {x: 0, y: -3, z: 0}
+  waterThrust: 600
+  waterRCS: 40
   loadDelay: 1
   heatShieldDurration: 2.5
   mainThrustParticles: {fileID: 198887831202274550}

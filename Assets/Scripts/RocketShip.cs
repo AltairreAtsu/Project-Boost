@@ -6,9 +6,11 @@ public class RocketShip : MonoBehaviour {
     private AudioSource audioSource;
 
 	private bool invulnerable = false;
-
-	[SerializeField] private bool heatShield = false;
+	private bool inWater = false;
+	private bool heatShield = false;
 	private float immunityTimeStep = 0f;
+
+	private Vector3 originalGravity = Vector3.zero;
 
     private enum State { Alive, Dying, Trancending}
     private State state = State.Alive;
@@ -18,6 +20,10 @@ public class RocketShip : MonoBehaviour {
 
     [SerializeField] private float mainThrust = 1f;
     [SerializeField] private float rcsThrust = 1f;
+	[Space]
+	[SerializeField] private Vector3 waterGravity = Vector3.zero;
+	[SerializeField] private float waterThrust = 1f;
+	[SerializeField] private float waterRCS = 1f;
 	[Space]
 	[SerializeField] private float loadDelay = 1f;
 	[Space]
@@ -36,6 +42,7 @@ public class RocketShip : MonoBehaviour {
 	void Start () {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+		originalGravity = Physics.gravity;
 	}
 	
 	void Update () {
@@ -74,7 +81,14 @@ public class RocketShip : MonoBehaviour {
 		if (state != State.Alive) { return; }
 		if (other.tag == "Fire" && heatShield) { return; }
 
-		if (other.tag != "Trigger")
+		if(other.tag == "Water" && !inWater)
+		{
+			Physics.gravity = waterGravity;
+			inWater = true;
+			return;
+		}
+
+		if (other.tag != "Trigger" && other.tag != "Water")
 		{
 			StartDeathSequence();
 		}
@@ -87,6 +101,17 @@ public class RocketShip : MonoBehaviour {
 		if (airHazard != null)
 		{
 			Recoil(other.transform.up, airHazard.GetRecoil());
+			return;
+		}
+
+	}
+
+	private void OnTriggerExit(Collider other)
+	{
+		if(other.tag == "Water" && inWater)
+		{
+			Physics.gravity = originalGravity;
+			inWater = false;
 		}
 	}
 
@@ -118,10 +143,18 @@ public class RocketShip : MonoBehaviour {
 	private void RespondToRotationInput()
     {
         rigidBody.freezeRotation = true;
+		float rotationThisFrame;
 
-        float rotationThisFrame = rcsThrust * Time.deltaTime;
+		if (inWater)
+		{
+			 rotationThisFrame = waterRCS * Time.deltaTime;
+		}
+		else
+		{
+			 rotationThisFrame = rcsThrust * Time.deltaTime;
+		}
 
-        if (Input.GetKey(KeyCode.A))
+		if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(Vector3.forward * rotationThisFrame);
         }
@@ -148,7 +181,16 @@ public class RocketShip : MonoBehaviour {
 
 	private void ApplyThrust()
 	{
-		rigidBody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
+		if (inWater)
+		{
+			rigidBody.AddRelativeForce(Vector3.up * waterThrust * Time.deltaTime);
+		}
+		else
+		{
+			rigidBody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
+		}
+		
+
 		if (!audioSource.isPlaying)
 			audioSource.PlayOneShot(mainThrustSfx);
 		mainThrustParticles.Play();

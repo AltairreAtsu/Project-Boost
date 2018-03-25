@@ -43,7 +43,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -515,6 +515,23 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e631738aa4dc4ce4d88cba212c94c186, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &728765625 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1404047240764632, guid: bdf24ce7b4583974c86c7c0024a00b14,
+    type: 2}
+  m_PrefabInternal: {fileID: 1833205103}
+--- !u!65 &728765628
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 728765625}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 1, z: 0.99999994}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1006203434
 Prefab:
   m_ObjectHideFlags: 0
@@ -1081,6 +1098,22 @@ Prefab:
     - target: {fileID: 4326071966191112, guid: bdf24ce7b4583974c86c7c0024a00b14, type: 2}
       propertyPath: m_RootOrder
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4467693118465786, guid: bdf24ce7b4583974c86c7c0024a00b14, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 5.5774565
+      objectReference: {fileID: 0}
+    - target: {fileID: 4467693118465786, guid: bdf24ce7b4583974c86c7c0024a00b14, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909976643727872, guid: bdf24ce7b4583974c86c7c0024a00b14, type: 2}
+      propertyPath: m_TagString
+      value: Water
+      objectReference: {fileID: 0}
+    - target: {fileID: 1404047240764632, guid: bdf24ce7b4583974c86c7c0024a00b14, type: 2}
+      propertyPath: m_TagString
+      value: Water
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bdf24ce7b4583974c86c7c0024a00b14, type: 2}
