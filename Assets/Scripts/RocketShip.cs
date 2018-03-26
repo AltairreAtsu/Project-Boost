@@ -32,10 +32,12 @@ public class RocketShip : MonoBehaviour {
 	[SerializeField] private ParticleSystem mainThrustParticles = null;
 	[SerializeField] private ParticleSystem deathParticles = null;
 	[SerializeField] private ParticleSystem sucessParticles = null;
+	[SerializeField] private ParticleSystem splashParticle = null;
 	[Space]
 	[SerializeField] private AudioClip mainThrustSfx = null;
 	[SerializeField] private AudioClip deathSfx = null;
 	[SerializeField] private AudioClip jingleSfx = null;
+	[SerializeField] private AudioClip splashSfx = null;
 	[Space]
 	[SerializeField] private MeshRenderer shield = null;
 
@@ -85,6 +87,11 @@ public class RocketShip : MonoBehaviour {
 		{
 			Physics.gravity = waterGravity;
 			inWater = true;
+
+			splashParticle.GetComponent<AudioSource>().Play();
+			splashParticle.transform.position  = transform.position;
+			splashParticle.Play();
+
 			return;
 		}
 

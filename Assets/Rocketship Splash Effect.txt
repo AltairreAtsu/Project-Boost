@@ -1,0 +1,4 @@
+At present for the Splash Effect to work one must have a seperate splash effect in scene and point the rocket at the object.
+
+This is to avoid re-creating the object everytime we want to use it and to preserve it's rotation.
+(If it was childed to the Rocketship it would move with it but also turn with it. Rotation is harder to correct for than a position. In the future this may changed)

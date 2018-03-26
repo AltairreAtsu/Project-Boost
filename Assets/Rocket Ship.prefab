@@ -87,6 +87,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4805685186188906}
   - component: {fileID: 54627426007810620}
+  - component: {fileID: 65840597238826486}
+  - component: {fileID: 65149456021952364}
   - component: {fileID: 82577020154730732}
   - component: {fileID: 114162472157975018}
   m_Layer: 0
@@ -105,7 +107,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4121497842433538}
   - component: {fileID: 33990260215248304}
-  - component: {fileID: 65268491756636912}
   - component: {fileID: 23153924603525570}
   m_Layer: 0
   m_Name: Starboard Booster
@@ -123,7 +124,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4338108897865438}
   - component: {fileID: 33483355151613430}
-  - component: {fileID: 65593187094720652}
   - component: {fileID: 23647596936889292}
   m_Layer: 0
   m_Name: Portside Booster
@@ -158,7 +158,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4559103382678356}
   - component: {fileID: 33216507342774798}
-  - component: {fileID: 65244133650581710}
   - component: {fileID: 23888821445087624}
   m_Layer: 0
   m_Name: Rocket Body
@@ -471,42 +470,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 56
   m_CollisionDetection: 0
---- !u!65 &65244133650581710
+--- !u!65 &65149456021952364
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1529189290200762}
+  m_GameObject: {fileID: 1219206681233478}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65268491756636912
+  m_Size: {x: 1.89, y: 1.25, z: 1}
+  m_Center: {x: 0, y: -1.3, z: 0}
+--- !u!65 &65840597238826486
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1233317319964916}
+  m_GameObject: {fileID: 1219206681233478}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65593187094720652
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1412325348520938}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 2.22, z: 1}
+  m_Center: {x: 0, y: 0.41, z: 0}
 --- !u!82 &82577020154730732
 AudioSource:
   m_ObjectHideFlags: 1
@@ -644,6 +631,7 @@ MonoBehaviour:
   mainThrustParticles: {fileID: 198887831202274550}
   deathParticles: {fileID: 198755534043994878}
   sucessParticles: {fileID: 198643994637096226}
+  splashParticle: {fileID: 0}
   mainThrustSfx: {fileID: 8300000, guid: 3e574fddb2e553549a7db9455b214180, type: 3}
   deathSfx: {fileID: 8300000, guid: 2b4e2a6a92b1eae41ab7cb58f5044a89, type: 3}
   jingleSfx: {fileID: 8300000, guid: 0ed36ae513656a44389cd128e99e6c22, type: 3}
