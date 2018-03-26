@@ -9,20 +9,20 @@ EditorBuildSettings:
     path: Assets/_Scenes/Cave Main.unity
     guid: fe0c94c2985ee114ead20ac8ec823626
   - enabled: 1
-    path: Assets/_Scenes/Down and Up.unity
-    guid: a5593742abc09fe44a7ec2b813f63141
-  - enabled: 1
     path: Assets/_Scenes/Introduction to Slider.unity
     guid: dc37d34d88c782d4db89cdebaf1ea42f
   - enabled: 1
     path: Assets/_Scenes/Cave Alt.unity
     guid: 098c30ba5ee01394e899731d52cdefbe
   - enabled: 1
-    path: Assets/_Scenes/Introduction to Fire.unity
-    guid: 059e9547fa4dfde48b9818ebd354ba0c
+    path: Assets/_Scenes/Introduction to Water.unity
+    guid: 07f077ef0f31b6641a6165bbdf2e4a4b
   - enabled: 1
     path: Assets/_Scenes/3 Vertical Sliders.unity
     guid: d0ed0d2f2bc67e4448788c44914c917b
+  - enabled: 1
+    path: Assets/_Scenes/Introduction to Fire.unity
+    guid: 059e9547fa4dfde48b9818ebd354ba0c
   - enabled: 1
     path: Assets/_Scenes/The Climb.unity
     guid: af3e053cc82bc5240ae695c1cc6b351f
