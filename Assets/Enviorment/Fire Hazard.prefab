@@ -173,6 +173,7 @@ MonoBehaviour:
   fireDurration: 1
   tellDurration: 2
   primaryDelay: 3
+  startDelay: 0
   firingSystem: {fileID: 198578162746032474}
   primingSystem: {fileID: 198449574966219748}
 --- !u!136 &136435238552003348

@@ -7,12 +7,15 @@ public class Hazard : MonoBehaviour {
 	[SerializeField] private float fireDurration = 1f;
 	[SerializeField] private float tellDurration = 1f;
 	[SerializeField] private float primaryDelay = 1f;
+	[SerializeField] private float startDelay = 0f;
+	[Space]
+	[SerializeField] private bool preFire = false;
 	[Space]
 	[SerializeField] private ParticleSystem firingSystem = null;
 	[SerializeField] private ParticleSystem primingSystem = null;
 
-	private enum State { Firing, Priming, Delay}
-	State state = State.Delay;
+	private enum State { Starting, Firing, Priming, Delay }
+	State state = State.Starting;
 
 	private float lastStep = 0f;
 
@@ -34,6 +37,16 @@ public class Hazard : MonoBehaviour {
 		}
 		hazardCollider.enabled = false;
 		lastStep = 0f;
+
+		if (preFire)
+		{
+			Prime();
+			return;
+		}
+		if(startDelay == 0f)
+		{
+			state = State.Delay;
+		}
 	}
 
 	private void Update () {
@@ -46,6 +59,9 @@ public class Hazard : MonoBehaviour {
 				break;
 			case State.Firing:
 				if (Time.time - lastStep >= fireDurration) { Delay(); }
+				break;
+			case State.Starting:
+				if (Time.time - lastStep >= startDelay) { Prime(); }
 				break;
 			default:
 				Debug.LogWarning(gameObject.name + "is in an Invalid State!");
