@@ -1,0 +1,12 @@
+When starting a scene:
+1) Remove the Camera and Directional Light
+2) Drag Landing Pad, Rocketship, Camera, Directional Light, and Background into hiearchy.
+This should preserve our desired camera position and by having everything centered around the world origin changing the camera position
+will be much easier in future.
+
+Design Rules:
+Center the landing pad at 0, 0, 1
+Rocket Ship at 0, 2.5, 1
+Main Camera at: 2.2, 6, -16 with a rotation of: 12, 0, 0
+
+Things in the foreground such as the Rocketship and Landing/Launch Pads, and Hazards should be at z:1
