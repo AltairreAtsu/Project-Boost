@@ -10,6 +10,9 @@ public class OpeningAndClosing : MonoBehaviour {
 	[SerializeField] private float openingTime = 1f;
 	[SerializeField] private float closingTime = 1f;
 	[SerializeField] private float delayTime = 1f;
+	[Space]
+	[SerializeField] private bool active = true;
+	[SerializeField] private bool lockAndKey = false;
 
 	private Vector3 startingPositionTop = Vector3.zero;
 	private Vector3 startingPositionBottom = Vector3.zero;
@@ -19,47 +22,117 @@ public class OpeningAndClosing : MonoBehaviour {
 
 	private float lastStep = 0f;
 
-	private enum State { Convering, Diverging, Delay }
-	private State state = State.Convering;
+	private bool opening = false;
+	
 
-	// Use this for initialization
+	private enum State { Converging, Diverging, Delay }
+	private State state = State.Converging;
+
 	void Start () {
 		startingPositionTop = topWall.position;
 		startingPositionBottom = bottomWall.position;
-
-		//float y = (startingPositionTop.y + startingPositionBottom.y) / 2;
-		//float x = (startingPositionTop.x + startingPositionTop.x) / 2;
-
-		//endingPointTop = new Vector3(topWall.position.x + (topWall.localScale.x), topWall.position.y - (topWall.localScale.y), topWall.position.z);
-		//endingPointBottom = new Vector3(bottomWall.position.x + (topWall.localScale.x), bottomWall.position.y + (bottomWall.localScale.y), bottomWall.position.z);
-
-		//endingPointTop = new Vector3(x * 1.5f, y * 1.5f, startingPositionTop.z);
-		//endingPointBottom = new Vector3(x * .5f, y * .5f, endingPointBottom.z);
-
-		//endingPointTop = new Vector3((startingPositionTop.x + middlePoint.x) * (2 / 3), (startingPositionTop.y + middlePoint.y) * (2/3), startingPositionTop.z);
-		//endingPointBottom = new Vector3((startingPositionBottom.x + middlePoint.x) * (2 / 3), (startingPositionBottom.y + middlePoint.y) * (2/3), startingPositionBottom.z);
-
-
 
 		float y = (startingPositionTop.y + startingPositionBottom.y) / 2;
 		float x = (startingPositionTop.x + startingPositionBottom.x) / 2;
 		middlePoint = new Vector3(x, y, startingPositionTop.z);
 
-		endingPointTop = new Vector3( (startingPositionTop.x) + 4 * (middlePoint.x - startingPositionTop.x), (startingPositionTop.y) + 4 * (middlePoint.y - startingPositionTop.y), startingPositionTop.z);
-		endingPointBottom = new Vector3((startingPositionBottom.x) + 4 * (middlePoint.x - startingPositionBottom.x), (startingPositionBottom.y) + 4 * (middlePoint.y - startingPositionBottom.y), startingPositionBottom.z);
+		endingPointTop = ((startingPositionTop - middlePoint)*.75f )*-1;
+		endingPointBottom = ((startingPositionBottom - middlePoint) * .75f) * -1;
 
 		lastStep = Time.time;
+
+		if (!active)
+		{
+			state = State.Delay;
+			topWall.position = endingPointTop + startingPositionTop;
+			bottomWall.position = endingPointBottom + startingPositionBottom;
+		}
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		if(state == State.Convering)
+		if (!active) { return; }
+
+		switch (state)
 		{
-			float timeProgressed = Time.time - lastStep;
-			float timePercent = timeProgressed / closingTime;
-			topWall.position = Vector3.Lerp(startingPositionTop, endingPointTop, timePercent);
-			bottomWall.position = Vector3.Lerp(startingPositionBottom, endingPointBottom, timePercent);
+			case State.Converging:
+				Converge();
+				break;
+			case State.Diverging:
+				Diverge();
+				break;
+			case State.Delay:
+				Delay();
+				break;
 		}
+
+
+		if (state == State.Diverging)
+		{
+			Diverge();
+		}
+
+	}
+
+	private void Delay()
+	{
+		if (lockAndKey)
+		{
+			return;
+		}
+
+		if (Time.time - lastStep >= delayTime)
+		{
+			lastStep = Time.time;
+			if (opening)
+			{
+				state = State.Diverging;
+			}
+			else
+			{
+				state = State.Converging;
+			}
+		}
+	}
+
+	private void Diverge()
+	{
+		float timeProgressed = Time.time - lastStep;
+		float timePercent = timeProgressed / openingTime;
+		topWall.position = Vector3.Lerp(endingPointTop + startingPositionTop, startingPositionTop, timePercent);
+		bottomWall.position = Vector3.Lerp(endingPointBottom + startingPositionBottom, startingPositionBottom, timePercent);
+
+		bool topWallInPosition = topWall.position == startingPositionTop;
+		bool bottomWallInPosition = bottomWall.position == startingPositionBottom;
+		if (topWallInPosition && bottomWallInPosition)
+		{
+			lastStep = Time.time;
+			state = State.Delay;
+			opening = false;
+		}
+	}
+
+	private void Converge()
+	{
+		float timeProgressed = Time.time - lastStep;
+		float timePercent = timeProgressed / closingTime;
+		topWall.position = Vector3.Lerp(startingPositionTop, endingPointTop + startingPositionTop, timePercent);
+		bottomWall.position = Vector3.Lerp(startingPositionBottom, endingPointBottom + startingPositionBottom, timePercent);
+
+		bool topWallInPosition = topWall.position == endingPointTop + startingPositionTop;
+		bool bottomWallInPosition = bottomWall.position == endingPointBottom + startingPositionBottom;
+		if (topWallInPosition && bottomWallInPosition)
+		{
+			lastStep = Time.time;
+			state = State.Delay;
+			opening = true;
+		}
+	}
+
+	public void Activate()
+	{
+		active = true;
+		lastStep = Time.time;
+		state = State.Diverging;
 	}
 
 	private void OnDrawGizmos()
