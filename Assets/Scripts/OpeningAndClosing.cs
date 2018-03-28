@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OpeningAndClosing : MonoBehaviour {
+public class OpeningAndClosing : MonoBehaviour, Triggerable {
 
 	[SerializeField] private Transform topWall = null;
 	[SerializeField] private Transform bottomWall = null;
@@ -128,11 +128,16 @@ public class OpeningAndClosing : MonoBehaviour {
 		}
 	}
 
-	public void Activate()
+	public void Trigger()
 	{
 		active = true;
 		lastStep = Time.time;
 		state = State.Diverging;
+	}
+
+	public bool IsTriggered()
+	{
+		return active;
 	}
 
 	private void OnDrawGizmos()
