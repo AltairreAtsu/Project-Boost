@@ -37,7 +37,6 @@ public class RocketShip : MonoBehaviour {
 	[SerializeField] private AudioClip mainThrustSfx = null;
 	[SerializeField] private AudioClip deathSfx = null;
 	[SerializeField] private AudioClip jingleSfx = null;
-	[SerializeField] private AudioClip splashSfx = null;
 	[Space]
 	[SerializeField] private MeshRenderer shield = null;
 
