@@ -32,20 +32,18 @@ public class OpeningAndClosing : MonoBehaviour, Triggerable {
 		startingPositionTop = topWall.position;
 		startingPositionBottom = bottomWall.position;
 
-		float y = (startingPositionTop.y + startingPositionBottom.y) / 2;
-		float x = (startingPositionTop.x + startingPositionBottom.x) / 2;
-		middlePoint = new Vector3(x, y, startingPositionTop.z);
+		endingPointTop = transform.TransformPoint(new Vector3(0f, (topWall.localScale.y/2), 1f));
+		endingPointBottom = transform.TransformPoint(new Vector3(0f, (bottomWall.localScale.y/2)*-1, 1f));
+		
 
-		endingPointTop = ((startingPositionTop - middlePoint)*.75f )*-1;
-		endingPointBottom = ((startingPositionBottom - middlePoint) * .75f) * -1;
 
 		lastStep = Time.time;
 
 		if (!active)
 		{
 			state = State.Delay;
-			topWall.position = endingPointTop + startingPositionTop;
-			bottomWall.position = endingPointBottom + startingPositionBottom;
+			topWall.position = endingPointTop;
+			bottomWall.position = endingPointBottom;
 		}
 	}
 	
@@ -98,8 +96,8 @@ public class OpeningAndClosing : MonoBehaviour, Triggerable {
 	{
 		float timeProgressed = Time.time - lastStep;
 		float timePercent = timeProgressed / openingTime;
-		topWall.position = Vector3.Lerp(endingPointTop + startingPositionTop, startingPositionTop, timePercent);
-		bottomWall.position = Vector3.Lerp(endingPointBottom + startingPositionBottom, startingPositionBottom, timePercent);
+		topWall.position = Vector3.Lerp(endingPointTop, startingPositionTop, timePercent);
+		bottomWall.position = Vector3.Lerp(endingPointBottom, startingPositionBottom, timePercent);
 
 		bool topWallInPosition = topWall.position == startingPositionTop;
 		bool bottomWallInPosition = bottomWall.position == startingPositionBottom;
@@ -115,11 +113,12 @@ public class OpeningAndClosing : MonoBehaviour, Triggerable {
 	{
 		float timeProgressed = Time.time - lastStep;
 		float timePercent = timeProgressed / closingTime;
-		topWall.position = Vector3.Lerp(startingPositionTop, endingPointTop + startingPositionTop, timePercent);
-		bottomWall.position = Vector3.Lerp(startingPositionBottom, endingPointBottom + startingPositionBottom, timePercent);
 
-		bool topWallInPosition = topWall.position == endingPointTop + startingPositionTop;
-		bool bottomWallInPosition = bottomWall.position == endingPointBottom + startingPositionBottom;
+		topWall.position = Vector3.Lerp(startingPositionTop, endingPointTop, timePercent);
+		bottomWall.position = Vector3.Lerp(startingPositionBottom, endingPointBottom, timePercent);
+
+		bool topWallInPosition = topWall.position == endingPointTop;
+		bool bottomWallInPosition = bottomWall.position == endingPointBottom;
 		if (topWallInPosition && bottomWallInPosition)
 		{
 			lastStep = Time.time;
@@ -142,18 +141,7 @@ public class OpeningAndClosing : MonoBehaviour, Triggerable {
 
 	private void OnDrawGizmos()
 	{
-		
-		if (topWall == null && bottomWall == null) { return; }
-		if (!Application.isPlaying)
-		{
-			startingPositionTop = topWall.position;
-			startingPositionBottom = bottomWall.position;
-			float y = (startingPositionTop.y + startingPositionBottom.y) / 2;
-			float x = (startingPositionTop.x + startingPositionBottom.x) / 2;
-			middlePoint = new Vector3(x, y, startingPositionTop.z);
-			endingPointTop = new Vector3(topWall.position.x - (topWall.localScale.x / 2), topWall.position.y - (topWall.localScale.y / 2), topWall.position.z);
-		}
 		Gizmos.color = Color.yellow;
-		Gizmos.DrawSphere(middlePoint, 0.5f);
+		Gizmos.DrawSphere( transform.TransformPoint(new Vector3(0,0,0)) , 0.5f);
 	}
 }
