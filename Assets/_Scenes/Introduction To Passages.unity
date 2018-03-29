@@ -1338,7 +1338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 906724239}
-  triggerType: 1
+  deTrigger: 0
 --- !u!1001 &810303923
 Prefab:
   m_ObjectHideFlags: 0

@@ -16,7 +16,6 @@ public class MovingWall : MonoBehaviour, Triggerable {
 		startingPos = transform.position;
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		if (active && Vector3.Distance(transform.position, startingPos + movementVector) > .6)
 		{
@@ -27,6 +26,11 @@ public class MovingWall : MonoBehaviour, Triggerable {
 	public void Trigger()
 	{
 		active = true;
+	}
+
+	public void DeTrigger()
+	{
+		active = false;
 	}
 
 	public bool IsTriggered()

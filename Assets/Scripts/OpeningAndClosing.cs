@@ -134,6 +134,12 @@ public class OpeningAndClosing : MonoBehaviour, Triggerable {
 		state = State.Diverging;
 	}
 
+	public void DeTrigger()
+	{
+		active = false;
+		lastStep = Time.time;
+	}
+
 	public bool IsTriggered()
 	{
 		return active;

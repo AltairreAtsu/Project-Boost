@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaypointObject : MonoBehaviour {
+public class WaypointObject : MonoBehaviour, Triggerable {
 
 	[SerializeField] private Vector3[] wayPoints;
 	[SerializeField] private float totalDurration = 5f;
 	[Space]
 	[SerializeField] private bool doBackTrack = false;
+	[SerializeField] private bool active = true;
 	[Space]
 	[SerializeField] private float debugSphereRadius = 0.5f;
 
@@ -18,9 +19,9 @@ public class WaypointObject : MonoBehaviour {
 	private int section = 0;
 
 	private float lastStep = 0f;
+	private float saveTime = 0f;
 
 	private bool backTracking = false;
-	//private bool lastLeg = false;
 
 	void Start () {
 		if(wayPoints.Length <= 0)
@@ -37,6 +38,8 @@ public class WaypointObject : MonoBehaviour {
 	
 	void Update ()
 	{
+		if(!active) { return; }
+
 		if (!backTracking)
 		{
 			float timePercent = CalculateTimePercent(distances[section]);
@@ -142,6 +145,23 @@ public class WaypointObject : MonoBehaviour {
 			distances[i] = Vector3.Distance(wayPoints[i - 1] + transform.position, wayPoints[i] + transform.position);
 			totalDistance += distances[i];
 		}
+	}
+
+	public void Trigger()
+	{
+		active = true;
+		lastStep = Time.time - (saveTime - lastStep);
+	}
+
+	public void DeTrigger()
+	{
+		active = false;
+		saveTime = Time.time;
+	}
+
+	public bool IsTriggered()
+	{
+		return active;
 	}
 
 	private void OnDrawGizmos()

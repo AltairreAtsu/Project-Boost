@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hazard : MonoBehaviour {
+public class Hazard : MonoBehaviour, Triggerable {
 
 	[SerializeField] private float fireDurration = 1f;
 	[SerializeField] private float tellDurration = 1f;
@@ -10,6 +10,7 @@ public class Hazard : MonoBehaviour {
 	[SerializeField] private float startDelay = 0f;
 	[Space]
 	[SerializeField] private bool preFire = false;
+	[SerializeField] private bool active = true;
 	[Space]
 	[SerializeField] private ParticleSystem firingSystem = null;
 	[SerializeField] private ParticleSystem primingSystem = null;
@@ -18,7 +19,7 @@ public class Hazard : MonoBehaviour {
 	State state = State.Starting;
 
 	private float lastStep = 0f;
-
+	
 	private CapsuleCollider hazardCollider = null;
 
 	protected void Start()
@@ -50,6 +51,8 @@ public class Hazard : MonoBehaviour {
 	}
 
 	private void Update () {
+		if (!active) { return; }
+
 		switch (state) {
 			case State.Delay:
 				if (Time.time - lastStep >= primaryDelay) { Prime(); }
@@ -91,5 +94,26 @@ public class Hazard : MonoBehaviour {
 		firingSystem.Stop();
 		hazardCollider.enabled = false;
 		lastStep = Time.time;
+	}
+
+	public bool IsTriggered()
+	{
+		return active;
+	}
+
+	public void Trigger()
+	{
+		active = true;
+		lastStep = Time.time;
+		state = State.Delay;
+	}
+
+	public void DeTrigger()
+	{
+		active = false;
+		firingSystem.Stop();
+		primingSystem.Stop();
+		hazardCollider.enabled = false;
+		state = State.Delay;
 	}
 }

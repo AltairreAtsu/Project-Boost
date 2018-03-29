@@ -142,6 +142,7 @@ public class RocketShip : MonoBehaviour {
 		audioSource.Stop();
 		audioSource.PlayOneShot(deathSfx);
 		deathParticles.Play();
+		Physics.gravity = originalGravity;
 		state = State.Dying;
 		Invoke("LoadFirstLevel", loadDelay + deathSfx.length);
 	}

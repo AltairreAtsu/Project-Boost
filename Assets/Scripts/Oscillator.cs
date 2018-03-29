@@ -1,19 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Oscillator : MonoBehaviour
+public class Oscillator : MonoBehaviour, Triggerable
 {
 
 	[SerializeField] private Vector3 movementVector = new Vector3(10f, 0, 0);
 	[SerializeField] private float period = 2f;
+	[SerializeField] private bool active = true;
 	[Space]
 	[SerializeField] private float debugSphereRadius = 0.5f;
 
 	private Vector3 startingPos;
 
-	// Use this for initialization
 	void Start ()
 	{
 		startingPos = transform.position;
@@ -24,9 +25,11 @@ public class Oscillator : MonoBehaviour
 		}
 	}
 	
-	// Update is called once per frame
+
 	void Update ()
 	{
+		if(!active) { return; }
+
 		float cycles = Time.time / period;
 
 		const float tau = Mathf.PI * 2;
@@ -46,5 +49,20 @@ public class Oscillator : MonoBehaviour
 		Gizmos.DrawLine(startingPos, endVector);
 		Gizmos.DrawSphere(startingPos, debugSphereRadius);
 		Gizmos.DrawSphere(endVector, debugSphereRadius);
+	}
+
+	public void Trigger()
+	{
+		active = true;
+	}
+
+	public void DeTrigger()
+	{
+		active = false;
+	}
+
+	public bool IsTriggered()
+	{
+		return active;
 	}
 }

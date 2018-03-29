@@ -5,9 +5,7 @@ using UnityEngine;
 public class Trigger : MonoBehaviour {
 
 	[SerializeField] private GameObject target = null;
-
-	private enum Triggerables { MovingWall, Passage, None }
-	[SerializeField] Triggerables triggerType = Triggerables.None;
+	[SerializeField] private bool deTrigger = false;
 
 	private Triggerable triggerTarget = null;
 
@@ -18,26 +16,13 @@ public class Trigger : MonoBehaviour {
 			Debug.LogWarning(gameObject.name + "Target object cannot be null!");
 			this.enabled = false;
 		}
-		if(triggerType == Triggerables.None)
+
+		Component[] components = target.GetComponents(typeof(Component));
+		foreach (Component component in components)
 		{
-			Debug.LogWarning(gameObject.name + " trigger tpye must not be none! Turning off script!");
-			this.enabled = false;
-		}
-		if (triggerType == Triggerables.MovingWall)
-		{
-			MovingWall wall = target.GetComponent<MovingWall>();
-			if (wall != null)
+			if(component is Triggerable)
 			{
-				triggerTarget = (Triggerable)wall;
-				return;
-			}							
-		}
-		if (triggerType == Triggerables.Passage)
-		{
-			OpeningAndClosing passage = target.GetComponent<OpeningAndClosing>();
-			if (passage != null)
-			{
-				triggerTarget = (Triggerable)passage;
+				triggerTarget = (Triggerable)component;
 				return;
 			}
 		}
@@ -48,7 +33,13 @@ public class Trigger : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if(!triggerTarget.IsTriggered() && other.tag == "Player")
+		if(other.tag != "Player") { return;  }
+
+		if (deTrigger && triggerTarget.IsTriggered())
+			triggerTarget.DeTrigger();
+
+		if (!deTrigger && !triggerTarget.IsTriggered())
 			triggerTarget.Trigger();
+
 	}
 }
