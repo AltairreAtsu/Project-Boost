@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class Oscillator : MonoBehaviour, Triggerable
+public class Oscillator : MonoBehaviour, ITriggerable
 {
 
 	[SerializeField] private Vector3 movementVector = new Vector3(10f, 0, 0);

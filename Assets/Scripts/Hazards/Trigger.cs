@@ -7,7 +7,7 @@ public class Trigger : MonoBehaviour {
 	[SerializeField] private GameObject target = null;
 	[SerializeField] private bool deTrigger = false;
 
-	private Triggerable triggerTarget = null;
+	private ITriggerable triggerTarget = null;
 
 	private void Start()
 	{
@@ -20,9 +20,9 @@ public class Trigger : MonoBehaviour {
 		Component[] components = target.GetComponents(typeof(Component));
 		foreach (Component component in components)
 		{
-			if(component is Triggerable)
+			if(component is ITriggerable)
 			{
-				triggerTarget = (Triggerable)component;
+				triggerTarget = (ITriggerable)component;
 				return;
 			}
 		}

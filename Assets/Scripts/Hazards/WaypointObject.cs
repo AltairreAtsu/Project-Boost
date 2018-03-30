@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaypointObject : MonoBehaviour, Triggerable {
+public class WaypointObject : MonoBehaviour, ITriggerable {
 
 	[SerializeField] private Vector3[] wayPoints;
 	[SerializeField] private float totalDurration = 5f;

@@ -1,4 +1,4 @@
-﻿public interface Triggerable {
+﻿public interface ITriggerable {
 	void Trigger();
 	void DeTrigger();
 	bool IsTriggered();

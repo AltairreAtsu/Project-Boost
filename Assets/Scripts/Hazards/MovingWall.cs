@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingWall : MonoBehaviour, Triggerable {
+public class MovingWall : MonoBehaviour, ITriggerable {
 
 	[SerializeField] private Vector3 movementVector;
 	[SerializeField] private float speed = 1f;

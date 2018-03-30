@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 65149456021952364}
   - component: {fileID: 82577020154730732}
   - component: {fileID: 114162472157975018}
+  - component: {fileID: 114032785088109268}
   m_Layer: 0
   m_Name: Rocket Ship
   m_TagString: Player
@@ -610,6 +611,17 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &114032785088109268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1219206681233478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9d7eb30b50efd54e80155c350cc2a88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114162472157975018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -626,8 +638,6 @@ MonoBehaviour:
   waterGravity: {x: 0, y: -3, z: 0}
   waterThrust: 600
   waterRCS: 40
-  loadDelay: 1
-  heatShieldDurration: 2.5
   mainThrustParticles: {fileID: 198887831202274550}
   deathParticles: {fileID: 198755534043994878}
   sucessParticles: {fileID: 198643994637096226}
@@ -636,6 +646,8 @@ MonoBehaviour:
   deathSfx: {fileID: 8300000, guid: 2b4e2a6a92b1eae41ab7cb58f5044a89, type: 3}
   jingleSfx: {fileID: 8300000, guid: 0ed36ae513656a44389cd128e99e6c22, type: 3}
   shield: {fileID: 23851955441827322}
+  heatShieldDurration: 2.5
+  loadDelay: 1
 --- !u!198 &198643994637096226
 ParticleSystem:
   m_ObjectHideFlags: 1

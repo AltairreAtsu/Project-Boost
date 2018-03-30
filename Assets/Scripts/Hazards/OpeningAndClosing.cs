@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OpeningAndClosing : MonoBehaviour, Triggerable {
+public class OpeningAndClosing : MonoBehaviour, ITriggerable {
 
 	[SerializeField] private Transform topWall = null;
 	[SerializeField] private Transform bottomWall = null;

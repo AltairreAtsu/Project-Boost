@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hazard : MonoBehaviour, Triggerable {
+public class Hazard : MonoBehaviour, ITriggerable {
 
 	[SerializeField] private float fireDurration = 1f;
 	[SerializeField] private float tellDurration = 1f;

@@ -1,48 +1,62 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class RocketShip : MonoBehaviour {
-    private Rigidbody rigidBody;
+
+public partial class RocketShip : MonoBehaviour {
+	#region Component Variables
+	private Rigidbody rigidBody;
     private AudioSource audioSource;
+	private LevelManager levelManager;
+	#endregion
 
-	private bool invulnerable = false;
-	private bool inWater = false;
+	#region Power Up Variables
+	private PowerUp.Types powerUp = PowerUp.Types.None;
+
 	private bool heatShield = false;
 	private float immunityTimeStep = 0f;
+	#endregion
 
+	private bool invulnerable = false;
+
+	private bool inWater = false;
 	private Vector3 originalGravity = Vector3.zero;
 
-    private enum State { Alive, Dying, Trancending}
-    private State state = State.Alive;
+	private enum State { Alive, Dying, Trancending }
+	private State state = State.Alive;
 
-	public enum PowerUpTypes { Heatshield, None }
-	private PowerUpTypes powerUp = PowerUpTypes.None;
-
+	// Serialized Fields
+	#region Thrust Varriables
+	[Header ("Thrust Varriables")]
     [SerializeField] private float mainThrust = 1f;
     [SerializeField] private float rcsThrust = 1f;
 	[Space]
 	[SerializeField] private Vector3 waterGravity = Vector3.zero;
 	[SerializeField] private float waterThrust = 1f;
 	[SerializeField] private float waterRCS = 1f;
-	[Space]
-	[SerializeField] private float loadDelay = 1f;
-	[Space]
-	[SerializeField] private float heatShieldDurration = 2.5f;
-	[Space]
+	#endregion
+	#region Particle System Variables
+	[Header ("Particle Systems")]
 	[SerializeField] private ParticleSystem mainThrustParticles = null;
 	[SerializeField] private ParticleSystem deathParticles = null;
 	[SerializeField] private ParticleSystem sucessParticles = null;
 	[SerializeField] private ParticleSystem splashParticle = null;
-	[Space]
+	#endregion
+	#region Audio Clip Refrences
+	[Header ("Audio Clips")]
 	[SerializeField] private AudioClip mainThrustSfx = null;
 	[SerializeField] private AudioClip deathSfx = null;
 	[SerializeField] private AudioClip jingleSfx = null;
-	[Space]
+	#endregion
+	#region Other Variables
+	[Header ("Misc")]
 	[SerializeField] private MeshRenderer shield = null;
+	[SerializeField] private float heatShieldDurration = 2.5f;
+	[SerializeField] private float loadDelay = 1f;
+	#endregion
 
 	void Start () {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+		levelManager = GetComponent<LevelManager>();
 		originalGravity = Physics.gravity;
 	}
 	
@@ -59,7 +73,8 @@ public class RocketShip : MonoBehaviour {
 
 	}
 
-    private void OnCollisionEnter(Collision collision)
+	#region Collision and Trigger Handling
+	private void OnCollisionEnter(Collision collision)
     {
 		if (state != State.Alive || invulnerable) { return; }
 
@@ -120,33 +135,9 @@ public class RocketShip : MonoBehaviour {
 			inWater = false;
 		}
 	}
+	#endregion
 
-	private void Recoil(Vector3 dir, float recoilAmount)
-	{
-		rigidBody.AddRelativeForce(dir * recoilAmount * Time.deltaTime);
-	}
-
-	private void StartSucessSequence()
-	{
-		mainThrustParticles.Stop();
-		audioSource.Stop();
-		audioSource.PlayOneShot(jingleSfx);
-		sucessParticles.Play();
-		state = State.Trancending;
-		Invoke("LoadNextScene", loadDelay + jingleSfx.length);
-	}
-
-	private void StartDeathSequence()
-	{
-		mainThrustParticles.Stop();
-		audioSource.Stop();
-		audioSource.PlayOneShot(deathSfx);
-		deathParticles.Play();
-		Physics.gravity = originalGravity;
-		state = State.Dying;
-		Invoke("LoadFirstLevel", loadDelay + deathSfx.length);
-	}
-
+	#region Input Handling
 	private void RespondToRotationInput()
     {
         rigidBody.freezeRotation = true;
@@ -186,23 +177,6 @@ public class RocketShip : MonoBehaviour {
         }
     }
 
-	private void ApplyThrust()
-	{
-		if (inWater)
-		{
-			rigidBody.AddRelativeForce(Vector3.up * waterThrust * Time.deltaTime);
-		}
-		else
-		{
-			rigidBody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
-		}
-		
-
-		if (!audioSource.isPlaying)
-			audioSource.PlayOneShot(mainThrustSfx);
-		mainThrustParticles.Play();
-	}
-
 	private void RespondToDebugInput()
 	{
 		if( Input.GetKeyDown(KeyCode.C))
@@ -211,7 +185,7 @@ public class RocketShip : MonoBehaviour {
 		}
 		if (Input.GetKeyDown(KeyCode.L))
 		{
-			LoadNextScene();
+			levelManager.LoadNextScene();
 		}
 		if (Input.GetKeyDown(KeyCode.H))
 		{
@@ -225,16 +199,65 @@ public class RocketShip : MonoBehaviour {
 		{
 			switch (powerUp)
 			{
-				case PowerUpTypes.None:
+				case PowerUp.Types.None:
 					break;
-				case PowerUpTypes.Heatshield:
+				case PowerUp.Types.Heatshield:
 					TriggerHeatShield();
-					powerUp = PowerUpTypes.None;
+					powerUp = PowerUp.Types.None;
 					break;
 			}
 		}
 	}
+	#endregion
 
+	#region Thrust Application
+	private void Recoil(Vector3 dir, float recoilAmount)
+	{
+		rigidBody.AddRelativeForce(dir * recoilAmount * Time.deltaTime);
+	}
+
+	private void ApplyThrust()
+	{
+		if (inWater)
+		{
+			rigidBody.AddRelativeForce(Vector3.up * waterThrust * Time.deltaTime);
+		}
+		else
+		{
+			rigidBody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
+		}
+
+
+		if (!audioSource.isPlaying)
+			audioSource.PlayOneShot(mainThrustSfx);
+		mainThrustParticles.Play();
+	}
+	#endregion
+
+	#region Death and Victory Handling
+	private void StartSucessSequence()
+	{
+		mainThrustParticles.Stop();
+		audioSource.Stop();
+		audioSource.PlayOneShot(jingleSfx);
+		sucessParticles.Play();
+		state = State.Trancending;
+		levelManager.Invoke("LoadNextScene", loadDelay + jingleSfx.length);
+	}
+
+	private void StartDeathSequence()
+	{
+		mainThrustParticles.Stop();
+		audioSource.Stop();
+		audioSource.PlayOneShot(deathSfx);
+		deathParticles.Play();
+		Physics.gravity = originalGravity;
+		state = State.Dying;
+		levelManager.Invoke("ReloadLevel", loadDelay + deathSfx.length);
+	}
+	#endregion
+
+	#region PowerUp Handling
 	private void DoPowerUpTick()
 	{
 		if(heatShield && Time.time - immunityTimeStep >= heatShieldDurration)
@@ -244,16 +267,9 @@ public class RocketShip : MonoBehaviour {
 		}
 	}
 
-	private void LoadNextScene()
+	public void AwardPowerUp(PowerUp.Types powerUp)
 	{
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-		state = State.Alive;
-	}
-
-	private void LoadFirstLevel()
-	{
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-		state = State.Alive;
+		if (this.powerUp == PowerUp.Types.None) this.powerUp = powerUp;
 	}
 
 	private void TriggerHeatShield()
@@ -262,16 +278,5 @@ public class RocketShip : MonoBehaviour {
 		shield.enabled = true;
 		immunityTimeStep = Time.time;
 	}
-
-	public void AwardPowerUp(PowerUpTypes powerUp)
-	{
-		if (this.powerUp == PowerUpTypes.None) this.powerUp = powerUp;
-	}
-
-	//TEMP
-	public void Quit()
-	{
-		Application.Quit();
-	}
-
+	#endregion
 }
