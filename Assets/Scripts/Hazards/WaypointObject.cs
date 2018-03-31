@@ -8,7 +8,11 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 	[SerializeField] private float totalDurration = 5f;
 	[Space]
 	[SerializeField] private bool doBackTrack = false;
+	[SerializeField] private bool doLoop = false;
 	[SerializeField] private bool active = true;
+	[SerializeField] private bool manualTuning = false;
+	[Space]
+	[SerializeField] private float[] durrations;
 	[Space]
 	[SerializeField] private float debugSphereRadius = 0.5f;
 
@@ -22,6 +26,7 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 	private float saveTime = 0f;
 
 	private bool backTracking = false;
+	private bool looping = false;
 
 	void Start () {
 		if(wayPoints.Length <= 0)
@@ -29,6 +34,11 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 			Debug.LogWarning(gameObject.name + " Not Enough Waypoints! Waypoint array must be larger than 0! Disabling script!");
 			this.enabled = false;
 		}
+
+//		if(durrations.Length != wayPoints.Length)
+//		{
+//			Debug.LogWarning(gameObject.name + " Durraiton List and Waypoint list must be the same length!");
+//		}
 
 		lastStep = Time.time;
 		startPosition = transform.position;
@@ -42,7 +52,16 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 
 		if (!backTracking)
 		{
-			float timePercent = CalculateTimePercent(distances[section]);
+			float timePercent;
+			if (!manualTuning)
+			{
+				timePercent = CalculateTimePercent(distances[section]);
+			}
+			else
+			{
+				timePercent = CalculateTimePercentManual(durrations[section]);
+			}
+			
 			MoveForward(timePercent);
 			CheckPathProgressionForward();
 		}
@@ -60,6 +79,10 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 		if (section == 0)
 		{
 			transform.position = Vector3.Lerp(startPosition, wayPoints[section] + startPosition, timePercent);
+		}
+		else if (looping)
+		{
+			transform.position = Vector3.Lerp(wayPoints[wayPoints.Length - 1] + startPosition, startPosition, timePercent);
 		}
 		else
 		{
@@ -83,6 +106,17 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 	{
 		bool endOfPath = section + 1 == wayPoints.Length;
 
+		if (looping && transform.position == startPosition)
+		{
+			section = 0;
+			looping = false;
+			lastStep = Time.time;
+		}
+		else if (looping)
+		{
+			return;
+		}
+
 		if (!endOfPath && IsAtWaypoint(wayPoints[section]))
 		{
 			section++;
@@ -97,6 +131,13 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 				lastStep = Time.time;
 			}
 			print("End Of Path Reached!");
+
+			if (doLoop && !looping)
+			{
+				looping = true;
+				section++;
+				lastStep = Time.time;
+			}
 		}
 	}
 
@@ -125,6 +166,12 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 		return Mathf.Clamp(passedTime / sectionDurration, 0f, 1f);
 	}
 
+	private float CalculateTimePercentManual(float sectionDurration)
+	{;
+		float passedTime = (Time.time - lastStep);
+		return Mathf.Clamp(passedTime / sectionDurration, 0f, 1f);
+	}
+
 	private bool IsAtWaypoint(Vector3 waypoint)
 	{
 		return (transform.position == waypoint + startPosition);
@@ -132,7 +179,8 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 
 	private void CalculateDistances()
 	{
-		distances = new float[wayPoints.Length];
+		distances = (doLoop) ? new float[wayPoints.Length + 1] : new float[wayPoints.Length];
+
 		for (int i = 0; i < wayPoints.Length; i++)
 		{
 			if (i == 0)
@@ -144,6 +192,13 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 
 			distances[i] = Vector3.Distance(wayPoints[i - 1] + transform.position, wayPoints[i] + transform.position);
 			totalDistance += distances[i];
+		}
+
+		if (doLoop)
+		{
+			print(wayPoints[wayPoints.Length - 1]);
+			distances[distances.Length - 1] = Vector3.Distance(wayPoints[wayPoints.Length-1] + transform.position, startPosition);
+			totalDistance += distances[distances.Length - 1];
 		}
 	}
 
@@ -188,6 +243,11 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 			Gizmos.DrawLine(wayPoints[i - 1] + startPosition, wayPoints[i] + startPosition);
 			Gizmos.DrawSphere(wayPoints[i] + startPosition, debugSphereRadius);
 
+		}
+
+		if (doLoop)
+		{
+			Gizmos.DrawLine(wayPoints[wayPoints.Length - 1] + startPosition, startPosition);
 		}
 	}
 }
