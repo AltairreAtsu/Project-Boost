@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Popper : MonoBehaviour, ITriggerable {
 
-	private enum States { Idle, Popping, PopStick, Returning }
+	private enum States { Idle, Popping, PopStick, Returning, StartDelay }
 	private States state = States.Idle;
 
 	private Vector3 startPosition = Vector3.zero;
@@ -18,6 +18,7 @@ public class Popper : MonoBehaviour, ITriggerable {
 	[SerializeField] private float idleTime = 3f;
 	[SerializeField] private float popTime = 1f;
 	[SerializeField] private float popStickTime = 1f;
+	[SerializeField] private float StartDelay = 0f;
 	[Space]
 	[SerializeField] private bool active = true;
 	[Space]
@@ -28,12 +29,20 @@ public class Popper : MonoBehaviour, ITriggerable {
 		startPosition = transform.position;
 		lastStep = Time.time;
 		endPosition = startPosition + transform.up * (distance - (transform.lossyScale.y / 2));
+
+		if(StartDelay > 0)
+		{
+			state = States.StartDelay;
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		switch (state)
 		{
+			case States.StartDelay:
+				Idle(StartDelay);
+				break;
 			case States.Idle:
 				Idle(idleTime);
 				break;
@@ -53,7 +62,7 @@ public class Popper : MonoBehaviour, ITriggerable {
 	{
 		if(Time.time - lastStep >= durration)
 		{
-			state = (state == States.Idle) ? States.Popping : States.Returning;
+			state = (state == States.PopStick) ? States.Returning : States.Popping;
 
 			lastStep = Time.time;
 			return;

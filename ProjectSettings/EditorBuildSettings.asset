@@ -32,3 +32,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Cave Rush.unity
     guid: 0003d29298b941b47a0615299362b7d4
+  - enabled: 1
+    path: Assets/_Scenes/Cave Woes.unity
+    guid: db1f137f7c8c78a4ebe5dd7c6bfee87e
