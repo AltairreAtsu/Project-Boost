@@ -32,8 +32,8 @@ public class OpeningAndClosing : MonoBehaviour, ITriggerable {
 		startingPositionTop = topWall.position;
 		startingPositionBottom = bottomWall.position;
 
-		endingPointTop = transform.TransformPoint(new Vector3(0f, (topWall.localScale.y/2), 1f));
-		endingPointBottom = transform.TransformPoint(new Vector3(0f, (bottomWall.localScale.y/2)*-1, 1f));
+		endingPointTop = transform.TransformPoint(new Vector3(0f, (topWall.localScale.y/2), 0f));
+		endingPointBottom = transform.TransformPoint(new Vector3(0f, (bottomWall.localScale.y/2)*-1, 0f));
 		
 
 

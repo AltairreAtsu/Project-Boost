@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class WaypointObject : MonoBehaviour, ITriggerable {
 
-	[SerializeField] private Vector3[] wayPoints;
-	[SerializeField] private float totalDurration = 5f;
-	[Space]
-	[SerializeField] private bool doBackTrack = false;
-	[SerializeField] private bool doLoop = false;
-	[SerializeField] private bool active = true;
-	[SerializeField] private bool manualTuning = false;
-	[Space]
-	[SerializeField] private float[] durrations;
-	[Space]
-	[SerializeField] private float debugSphereRadius = 0.5f;
+	public Vector3[] wayPoints;
+	public float totalDurration = 5f;
+
+	public bool doBackTrack = false;
+	public bool doLoop = false;
+	public bool active = true;
+	public bool manualTuning = false;
+
+	public float[] durrations;
+
+	public float debugSphereRadius = 0.5f;
 
 	private Vector3 startPosition = Vector3.zero;
 
