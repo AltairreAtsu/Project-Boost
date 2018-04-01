@@ -2775,6 +2775,10 @@ Prefab:
       propertyPath: target
       value: 
       objectReference: {fileID: 1079755128}
+    - target: {fileID: 1710687303290574, guid: 7c539562b5e93804da6eb988d345bc6c, type: 2}
+      propertyPath: m_Name
+      value: Camera Anchor
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7c539562b5e93804da6eb988d345bc6c, type: 2}
   m_IsPrefabParent: 0
@@ -3681,8 +3685,8 @@ Transform:
   - {fileID: 529979013}
   - {fileID: 275373276}
   - {fileID: 691072703}
-  - {fileID: 2131047928}
   - {fileID: 1340645558}
+  - {fileID: 2131047928}
   - {fileID: 167203823}
   - {fileID: 807989196}
   - {fileID: 567419375}

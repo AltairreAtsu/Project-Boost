@@ -645,6 +645,10 @@ MonoBehaviour:
   mainThrustSfx: {fileID: 8300000, guid: 3e574fddb2e553549a7db9455b214180, type: 3}
   deathSfx: {fileID: 8300000, guid: 2b4e2a6a92b1eae41ab7cb58f5044a89, type: 3}
   jingleSfx: {fileID: 8300000, guid: 0ed36ae513656a44389cd128e99e6c22, type: 3}
+  magnitude: 4
+  roughness: 4.5
+  fadeIn: 0.1
+  fadeOut: 2
   shield: {fileID: 23851955441827322}
   heatShieldDurration: 2.5
   loadDelay: 1

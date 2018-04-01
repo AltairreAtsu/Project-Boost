@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using EZCameraShake;
 
 public partial class RocketShip : MonoBehaviour {
 	#region Component Variables
@@ -45,6 +45,13 @@ public partial class RocketShip : MonoBehaviour {
 	[SerializeField] private AudioClip mainThrustSfx = null;
 	[SerializeField] private AudioClip deathSfx = null;
 	[SerializeField] private AudioClip jingleSfx = null;
+	#endregion
+	#region CameraShake
+	[Header("Camera Shake")]
+	[SerializeField] private float magnitude = 1.7f;
+	[SerializeField] private float roughness = 4.5f;
+	[SerializeField] private float fadeIn = 0.1f;
+	[SerializeField] private float fadeOut = 2.0f;
 	#endregion
 	#region Other Variables
 	[Header ("Misc")]
@@ -247,6 +254,7 @@ public partial class RocketShip : MonoBehaviour {
 
 	private void StartDeathSequence()
 	{
+		CameraShaker.Instance.ShakeOnce(magnitude, roughness, fadeIn, fadeOut);
 		mainThrustParticles.Stop();
 		audioSource.Stop();
 		audioSource.PlayOneShot(deathSfx);

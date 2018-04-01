@@ -3311,15 +3311,15 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1710687303290574, guid: 7c539562b5e93804da6eb988d345bc6c, type: 2}
+      propertyPath: m_Name
+      value: Camera Anchor
+      objectReference: {fileID: 0}
     - target: {fileID: 114239834871565750, guid: 7c539562b5e93804da6eb988d345bc6c,
         type: 2}
       propertyPath: target
       value: 
       objectReference: {fileID: 988959919}
-    - target: {fileID: 1710687303290574, guid: 7c539562b5e93804da6eb988d345bc6c, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7c539562b5e93804da6eb988d345bc6c, type: 2}
   m_IsPrefabParent: 0

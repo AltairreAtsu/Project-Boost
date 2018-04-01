@@ -2054,32 +2054,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4111470203808180, guid: 7c539562b5e93804da6eb988d345bc6c, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 12
+    - target: {fileID: 1710687303290574, guid: 7c539562b5e93804da6eb988d345bc6c, type: 2}
+      propertyPath: m_Name
+      value: Camera Anchor
       objectReference: {fileID: 0}
+    - target: {fileID: 114239834871565750, guid: 7c539562b5e93804da6eb988d345bc6c,
+        type: 2}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 560964158}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7c539562b5e93804da6eb988d345bc6c, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &663295813 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1710687303290574, guid: 7c539562b5e93804da6eb988d345bc6c,
-    type: 2}
-  m_PrefabInternal: {fileID: 663295812}
---- !u!114 &663295814
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 663295813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d895efa897889648badc5e22e8ef5b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 560964158}
-  panUp: 0
-  multiPan: 1
 --- !u!1 &795713781
 GameObject:
   m_ObjectHideFlags: 0
