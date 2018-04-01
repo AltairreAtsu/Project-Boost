@@ -27,11 +27,14 @@ EditorBuildSettings:
     path: Assets/_Scenes/The Climb.unity
     guid: af3e053cc82bc5240ae695c1cc6b351f
   - enabled: 1
+    path: Assets/_Scenes/Cave Rush.unity
+    guid: 0003d29298b941b47a0615299362b7d4
+  - enabled: 1
     path: Assets/_Scenes/Introduction To Passages.unity
     guid: 28cbb26bb6b9a6e4f9bce4cbcdd6abdf
   - enabled: 1
-    path: Assets/_Scenes/Cave Rush.unity
-    guid: 0003d29298b941b47a0615299362b7d4
+    path: Assets/_Scenes/Tumbler.unity
+    guid: 1e967f4e77327e848b4a9a5c214f053b
   - enabled: 1
     path: Assets/_Scenes/Cave Woes.unity
     guid: db1f137f7c8c78a4ebe5dd7c6bfee87e
