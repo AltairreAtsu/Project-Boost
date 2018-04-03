@@ -1,17 +1,51 @@
 fileFormatVersion: 2
-guid: 13a9e4f372fb16e4b83c090621ca2dab
-timeCreated: 1522603976
+guid: 8930717aa94004546a2253701b81bab7
+timeCreated: 1522789512
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: Material
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Cube
-  externalObjects: {}
+    100000: Main Turet
+    100002: //RootNode
+    100004: Turret Base Left
+    100006: Turret Base Right
+    100008: Turret Targeter
+    400000: Main Turet
+    400002: //RootNode
+    400004: Turret Base Left
+    400006: Turret Base Right
+    400008: Turret Targeter
+    2100000: Material.002
+    2100002: Turret Base
+    2100004: Gun Barrel
+    2300000: Main Turet
+    2300002: Turret Base Left
+    2300004: Turret Base Right
+    2300006: Turret Targeter
+    3300000: Main Turet
+    3300002: Turret Base Left
+    3300004: Turret Base Right
+    3300006: Turret Targeter
+    4300000: Turret Base Right
+    4300002: Main Turet
+    4300004: Turret Targeter
+    4300006: Turret Base Left
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gun Barrel
+    second: {fileID: 2100000, guid: 63c2a58d537313844bd7bac314b50bde, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 0236d1e6208c8de469e05a3946ec8b09, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Turret Base
+    second: {fileID: 2100000, guid: ecf06d347da7ca04491e1af9b7dad585, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -41,7 +75,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.5
     meshCompression: 0
     addColliders: 0
     importVisibility: 1
