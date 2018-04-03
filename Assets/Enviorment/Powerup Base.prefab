@@ -27,7 +27,8 @@ GameObject:
   - component: {fileID: 82166975480495660}
   - component: {fileID: 114366705836123696}
   - component: {fileID: 199150067012339690}
-  - component: {fileID: 114889998294378098}
+  - component: {fileID: 114454311548788856}
+  - component: {fileID: 114755262290083050}
   m_Layer: 0
   m_Name: Powerup Base
   m_TagString: Trigger
@@ -229,7 +230,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spinSpeed: 220
---- !u!114 &114889998294378098
+--- !u!114 &114454311548788856
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1395495480913364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16f9a6beaee442340b348f8cc053f44f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  deTrigger: 0
+--- !u!114 &114755262290083050
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -240,8 +254,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def28da5896859d43a40c0b9b50096e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpType: 0
-  pickupSFX: {fileID: 8300000, guid: 0ed36ae513656a44389cd128e99e6c22, type: 3}
+  pickUpType: 0
+  triggerOnPickup: 0
+  pickupSFX: {fileID: 0}
 --- !u!198 &198227382050702318
 ParticleSystem:
   m_ObjectHideFlags: 1

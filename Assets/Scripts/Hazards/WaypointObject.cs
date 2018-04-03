@@ -36,7 +36,7 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 			this.enabled = false;
 		}
 
-		if (manualTuning) { durrations = null; }
+		if (!manualTuning) { durrations = null; }
 
 		lastStep = Time.time;
 		startPosition = transform.position;
