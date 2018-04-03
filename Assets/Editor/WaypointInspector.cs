@@ -38,6 +38,7 @@ public class WaypointInspector : Editor {
 		if (!myTarget.manualTuning)
 		{
 			myTarget.totalDurration = EditorGUILayout.FloatField("Total Durration", myTarget.totalDurration);
+
 		}
 		else
 		{
@@ -45,6 +46,10 @@ public class WaypointInspector : Editor {
 			if (myTarget.doLoop && durrations.arraySize != wayPoints.arraySize + 1)
 			{
 				EditorGUILayout.LabelField("WARNING! when looping you must have " + (wayPoints.arraySize+1) + " entries in your durrations Array!");
+			}
+			else if (myTarget.doBackTrack && durrations.arraySize != wayPoints.arraySize)
+			{
+				EditorGUILayout.LabelField("WARNING! when backtracking you must have " + (wayPoints.arraySize) + " entries in your durrations Array!");
 			}
 		}
 	}
