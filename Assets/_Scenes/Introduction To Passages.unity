@@ -1574,7 +1574,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1288232146
+  randomSeed: -1204269634
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4993,7 +4993,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def28da5896859d43a40c0b9b50096e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUpType: 1
+  pickUpType: 1
+  triggerOnPickup: 0
   pickupSFX: {fileID: 8300000, guid: 0ed36ae513656a44389cd128e99e6c22, type: 3}
 --- !u!1001 &810303923
 Prefab:

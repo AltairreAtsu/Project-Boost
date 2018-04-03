@@ -151,11 +151,12 @@ MonoBehaviour:
   doBackTrack: 0
   doLoop: 1
   active: 1
-  manualTuning: 0
+  manualTuning: 1
   durrations:
   - 2
   - 3
-  - 2
+  - 3
+  - 3
   debugSphereRadius: 0.5
 --- !u!23 &110562017
 MeshRenderer:
@@ -3409,12 +3410,12 @@ MonoBehaviour:
   doBackTrack: 0
   doLoop: 1
   active: 1
-  manualTuning: 1
+  manualTuning: 0
   durrations:
   - 2
   - 3
   - 2
-  - 4
+  - 2
   debugSphereRadius: 0.5
 --- !u!23 &1641195216
 MeshRenderer:

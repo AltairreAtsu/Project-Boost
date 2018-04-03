@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class WaypointObject : MonoBehaviour, ITriggerable {
 
 	public Vector3[] wayPoints;
@@ -35,10 +36,7 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 			this.enabled = false;
 		}
 
-//		if(durrations.Length != wayPoints.Length)
-//		{
-//			Debug.LogWarning(gameObject.name + " Durraiton List and Waypoint list must be the same length!");
-//		}
+		if (manualTuning) { durrations = null; }
 
 		lastStep = Time.time;
 		startPosition = transform.position;

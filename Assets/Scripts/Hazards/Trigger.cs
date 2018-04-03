@@ -8,9 +8,12 @@ public class Trigger : MonoBehaviour {
 	[SerializeField] private bool deTrigger = false;
 
 	private ITriggerable triggerTarget = null;
+	private bool onPickup = false;
 
 	private void Start()
 	{
+		if(GetComponent<Pickup>() != null) { onPickup = true; }
+
 		if (target == null)
 		{
 			Debug.LogWarning(gameObject.name + "Target object cannot be null!");
@@ -33,13 +36,17 @@ public class Trigger : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if(other.tag != "Player") { return;  }
+		if(other.tag != "Player" || onPickup) { return;  }
 
+		DoTrigger();
+	}
+
+	public void DoTrigger()
+	{
 		if (deTrigger && triggerTarget.IsTriggered())
 			triggerTarget.DeTrigger();
 
 		if (!deTrigger && !triggerTarget.IsTriggered())
 			triggerTarget.Trigger();
-
 	}
 }

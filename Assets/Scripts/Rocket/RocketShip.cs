@@ -9,7 +9,7 @@ public partial class RocketShip : MonoBehaviour {
 	#endregion
 
 	#region Power Up Variables
-	private PowerUp.Types powerUp = PowerUp.Types.None;
+	private Pickup.Types powerUp = Pickup.Types.None;
 
 	private bool heatShield = false;
 	private float immunityTimeStep = 0f;
@@ -206,11 +206,11 @@ public partial class RocketShip : MonoBehaviour {
 		{
 			switch (powerUp)
 			{
-				case PowerUp.Types.None:
+				case Pickup.Types.None:
 					break;
-				case PowerUp.Types.Heatshield:
+				case Pickup.Types.Heatshield:
 					TriggerHeatShield();
-					powerUp = PowerUp.Types.None;
+					powerUp = Pickup.Types.None;
 					break;
 			}
 		}
@@ -265,7 +265,7 @@ public partial class RocketShip : MonoBehaviour {
 	}
 	#endregion
 
-	#region PowerUp Handling
+	#region Pickup Handling
 	private void DoPowerUpTick()
 	{
 		if(heatShield && Time.time - immunityTimeStep >= heatShieldDurration)
@@ -275,9 +275,9 @@ public partial class RocketShip : MonoBehaviour {
 		}
 	}
 
-	public void AwardPowerUp(PowerUp.Types powerUp)
+	public void AwardPowerUp(Pickup.Types powerUp)
 	{
-		if (this.powerUp == PowerUp.Types.None) this.powerUp = powerUp;
+		if (this.powerUp == Pickup.Types.None) this.powerUp = powerUp;
 	}
 
 	private void TriggerHeatShield()
