@@ -38,7 +38,8 @@ public partial class RocketShip : MonoBehaviour {
 	[SerializeField] private ParticleSystem mainThrustParticles = null;
 	[SerializeField] private ParticleSystem deathParticles = null;
 	[SerializeField] private ParticleSystem sucessParticles = null;
-	[SerializeField] private ParticleSystem splashParticle = null;
+	[SerializeField] private ParticleSystem splashEnterParticle = null;
+	[SerializeField] private ParticleSystem splashExitParticle = null;
 	#endregion
 	#region Audio Clip Refrences
 	[Header ("Audio Clips")]
@@ -109,9 +110,9 @@ public partial class RocketShip : MonoBehaviour {
 			Physics.gravity = waterGravity;
 			inWater = true;
 
-			splashParticle.GetComponent<AudioSource>().Play();
-			splashParticle.transform.position  = transform.position;
-			splashParticle.Play();
+			splashEnterParticle.GetComponent<AudioSource>().Play();
+			splashEnterParticle.transform.position  = transform.position;
+			splashEnterParticle.Play();
 
 			return;
 		}
@@ -138,6 +139,10 @@ public partial class RocketShip : MonoBehaviour {
 	{
 		if(other.tag == "Water" && inWater)
 		{
+			splashExitParticle.GetComponent<AudioSource>().Play();
+			splashExitParticle.transform.position = transform.position;
+			splashExitParticle.Play();
+
 			Physics.gravity = originalGravity;
 			inWater = false;
 		}
