@@ -1362,8 +1362,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f9a6beaee442340b348f8cc053f44f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 906724239}
-  deTrigger: 0
+  targets:
+  - target: {fileID: 906724239}
+    deTrigger: 0
 --- !u!199 &793835156
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -1574,7 +1575,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1204269634
+  randomSeed: 1252874109
   InitialModule:
     serializedVersion: 3
     enabled: 1

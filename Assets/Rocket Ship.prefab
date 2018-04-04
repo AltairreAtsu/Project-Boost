@@ -149,7 +149,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1529189290200762
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,7 +431,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1413576452877440}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -713,7 +713,8 @@ MonoBehaviour:
   mainThrustParticles: {fileID: 198887831202274550}
   deathParticles: {fileID: 198755534043994878}
   sucessParticles: {fileID: 198643994637096226}
-  splashParticle: {fileID: 0}
+  splashEnterParticle: {fileID: 0}
+  splashExitParticle: {fileID: 0}
   mainThrustSfx: {fileID: 8300000, guid: 3e574fddb2e553549a7db9455b214180, type: 3}
   deathSfx: {fileID: 8300000, guid: 2b4e2a6a92b1eae41ab7cb58f5044a89, type: 3}
   jingleSfx: {fileID: 8300000, guid: 0ed36ae513656a44389cd128e99e6c22, type: 3}

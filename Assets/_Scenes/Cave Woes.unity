@@ -402,8 +402,7 @@ MonoBehaviour:
   - {x: 5, y: 5, z: 0}
   - {x: 0, y: 5, z: 0}
   totalDurration: 5
-  doBackTrack: 0
-  doLoop: 1
+  behavior: 0
   active: 1
   manualTuning: 0
   durrations: []
@@ -1958,6 +1957,15 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 23851955441827322, guid: 953084a43aa7ba34b9019eb302de62b6,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1413576452877440, guid: 953084a43aa7ba34b9019eb302de62b6, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 953084a43aa7ba34b9019eb302de62b6, type: 2}
   m_IsPrefabParent: 0
@@ -2506,7 +2514,22 @@ Prefab:
       propertyPath: powerUpType
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114755262290083050, guid: c6a32b2c74fb1e74bb7f85e1278a4fb6,
+        type: 2}
+      propertyPath: pickUpType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114755262290083050, guid: c6a32b2c74fb1e74bb7f85e1278a4fb6,
+        type: 2}
+      propertyPath: pickupSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 0ed36ae513656a44389cd128e99e6c22, type: 3}
+    - target: {fileID: 1395495480913364, guid: c6a32b2c74fb1e74bb7f85e1278a4fb6, type: 2}
+      propertyPath: m_Name
+      value: Key
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114454311548788856, guid: c6a32b2c74fb1e74bb7f85e1278a4fb6, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: c6a32b2c74fb1e74bb7f85e1278a4fb6, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1134925495
@@ -4062,8 +4085,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f9a6beaee442340b348f8cc053f44f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 845874349}
-  deTrigger: 0
+  targets:
+  - target: {fileID: 845874349}
+    deTrigger: 0
 --- !u!1001 &1991848504
 Prefab:
   m_ObjectHideFlags: 0

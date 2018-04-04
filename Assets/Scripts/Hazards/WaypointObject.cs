@@ -79,7 +79,7 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 		{
 			transform.position = Vector3.Lerp(startPosition, wayPoints[section] + startPosition, timePercent);
 		}
-		else if (behavior == Behavior.Looping)
+		else if (looping)
 		{
 			transform.position = Vector3.Lerp(wayPoints[wayPoints.Length - 1] + startPosition, startPosition, timePercent);
 		}
@@ -111,7 +111,7 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 			looping = false;
 			lastStep = Time.time;
 		}
-		else if (behavior == Behavior.Looping)
+		else if (looping)
 		{
 			return;
 		}
