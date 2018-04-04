@@ -8,8 +8,9 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 	public Vector3[] wayPoints;
 	public float totalDurration = 5f;
 
-	public bool doBackTrack = false;
-	public bool doLoop = false;
+	public enum Behavior { Looping, Backtracking }
+	public Behavior behavior = Behavior.Looping;
+
 	public bool active = true;
 	public bool manualTuning = false;
 
@@ -78,7 +79,7 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 		{
 			transform.position = Vector3.Lerp(startPosition, wayPoints[section] + startPosition, timePercent);
 		}
-		else if (looping)
+		else if (behavior == Behavior.Looping)
 		{
 			transform.position = Vector3.Lerp(wayPoints[wayPoints.Length - 1] + startPosition, startPosition, timePercent);
 		}
@@ -110,7 +111,7 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 			looping = false;
 			lastStep = Time.time;
 		}
-		else if (looping)
+		else if (behavior == Behavior.Looping)
 		{
 			return;
 		}
@@ -122,7 +123,7 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 		}
 		else if (endOfPath && IsAtWaypoint(wayPoints[wayPoints.Length - 1]))
 		{
-			if (doBackTrack && !backTracking)
+			if (behavior == Behavior.Backtracking && !backTracking)
 			{
 				backTracking = true;
 				section--;
@@ -130,7 +131,7 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 			}
 			print("End Of Path Reached!");
 
-			if (doLoop && !looping)
+			if (behavior == Behavior.Looping && !looping)
 			{
 				looping = true;
 				section++;
@@ -177,7 +178,7 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 
 	private void CalculateDistances()
 	{
-		distances = (doLoop) ? new float[wayPoints.Length + 1] : new float[wayPoints.Length];
+		distances = (behavior == Behavior.Looping) ? new float[wayPoints.Length + 1] : new float[wayPoints.Length];
 
 		for (int i = 0; i < wayPoints.Length; i++)
 		{
@@ -192,7 +193,7 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 			totalDistance += distances[i];
 		}
 
-		if (doLoop)
+		if (behavior == Behavior.Looping)
 		{
 			print(wayPoints[wayPoints.Length - 1]);
 			distances[distances.Length - 1] = Vector3.Distance(wayPoints[wayPoints.Length-1] + transform.position, startPosition);
@@ -243,7 +244,7 @@ public class WaypointObject : MonoBehaviour, ITriggerable {
 
 		}
 
-		if (doLoop)
+		if (behavior == Behavior.Looping)
 		{
 			Gizmos.DrawLine(wayPoints[wayPoints.Length - 1] + startPosition, startPosition);
 		}

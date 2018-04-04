@@ -8,22 +8,56 @@ public class WaypointInspector : Editor {
 
 	private int waypointsLength;
 
+	GUIContent behaviorLabel;
+	SerializedProperty behavior;
+	private bool looping;
+	private bool backTracking;
+
 	SerializedProperty durrations;
 	SerializedProperty wayPoints;
 
+	GUIContent manualLabel;
+	SerializedProperty manualDurration;
+
+	GUIContent activeLabel;
+	SerializedProperty activeAtStart;
+
 	private string[] options = new string[] { "Loop", "Backtrack"};
-	private int behaviorIndex = 0;
+	private int behaviorIndex;
 
 	public void OnEnable()
 	{
+		WaypointObject myTarget = (WaypointObject)target;
+		behavior = serializedObject.FindProperty("behavior");
 		wayPoints = serializedObject.FindProperty("wayPoints");
 		durrations = serializedObject.FindProperty("durrations");
+		manualDurration = serializedObject.FindProperty("manualTuning");
+		activeAtStart = serializedObject.FindProperty("active");
+
+		behaviorLabel = new GUIContent("Behavior Mode:");
+		activeLabel = new GUIContent("Active at Start");
+		manualLabel = new GUIContent("Manually Tune Durrations");
+
+		looping = myTarget.behavior == WaypointObject.Behavior.Looping;
+		backTracking = myTarget.behavior == WaypointObject.Behavior.Backtracking;
+
+		if (looping)
+		{
+			behaviorIndex = 0;
+		}
+		else if (backTracking)
+		{
+			behaviorIndex = 1;
+		}
 	}
 
 	public override void OnInspectorGUI()
 	{
 		WaypointObject myTarget = (WaypointObject)target;
 		serializedObject.Update();
+
+		looping = myTarget.behavior == WaypointObject.Behavior.Looping;
+		backTracking = myTarget.behavior == WaypointObject.Behavior.Backtracking;
 
 		DrawBehaviorFoldout(myTarget);
 		DrawTriggerFoldout(myTarget);
@@ -43,11 +77,11 @@ public class WaypointInspector : Editor {
 		else
 		{
 			EditorGUILayout.PropertyField(durrations, true);
-			if (myTarget.doLoop && durrations.arraySize != wayPoints.arraySize + 1)
+			if (looping && durrations.arraySize != wayPoints.arraySize + 1)
 			{
 				EditorGUILayout.LabelField("WARNING! when looping you must have " + (wayPoints.arraySize+1) + " entries in your durrations Array!");
 			}
-			else if (myTarget.doBackTrack && durrations.arraySize != wayPoints.arraySize)
+			else if (backTracking && durrations.arraySize != wayPoints.arraySize)
 			{
 				EditorGUILayout.LabelField("WARNING! when backtracking you must have " + (wayPoints.arraySize) + " entries in your durrations Array!");
 			}
@@ -59,21 +93,10 @@ public class WaypointInspector : Editor {
 		EditorGUILayout.LabelField("Behavior");
 
 		EditorGUI.indentLevel += 1;
-			
-		behaviorIndex = EditorGUILayout.Popup("Behavior Mode", behaviorIndex, options);
-		switch (behaviorIndex)
-		{
-			case 0:
-				myTarget.doLoop = true;
-				myTarget.doBackTrack = false;
-				break;
-			case 1:
-				myTarget.doBackTrack = true;
-				myTarget.doLoop = false;
-				break;
-		}
-	
-		myTarget.manualTuning = EditorGUILayout.Toggle("Manually Tune Durrations", myTarget.manualTuning);
+
+		EditorGUILayout.PropertyField(behavior, behaviorLabel);
+
+		EditorGUILayout.PropertyField(manualDurration, manualLabel);
 		EditorGUI.indentLevel -= 1;
 	}
 
@@ -81,7 +104,7 @@ public class WaypointInspector : Editor {
 	{
 		EditorGUILayout.LabelField("Trigger");
 		EditorGUI.indentLevel += 1;
-		myTarget.active = EditorGUILayout.Toggle("Active at Start", myTarget.active);
+		EditorGUILayout.PropertyField(activeAtStart, activeLabel);
 		EditorGUI.indentLevel -= 1;
 	}
 }
