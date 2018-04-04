@@ -22,8 +22,6 @@ public class WaypointInspector : Editor {
 	GUIContent activeLabel;
 	SerializedProperty activeAtStart;
 
-	private string[] options = new string[] { "Loop", "Backtrack"};
-	private int behaviorIndex;
 
 	public void OnEnable()
 	{
@@ -40,15 +38,6 @@ public class WaypointInspector : Editor {
 
 		looping = myTarget.behavior == WaypointObject.Behavior.Looping;
 		backTracking = myTarget.behavior == WaypointObject.Behavior.Backtracking;
-
-		if (looping)
-		{
-			behaviorIndex = 0;
-		}
-		else if (backTracking)
-		{
-			behaviorIndex = 1;
-		}
 	}
 
 	public override void OnInspectorGUI()

@@ -12,12 +12,11 @@ public class Trigger : MonoBehaviour {
 
 	private void Start()
 	{
-		if(GetComponent<Pickup>() != null) { onPickup = true; }
+		if(GetComponent<Pickup>()) { onPickup = true; }
 
-		if (target == null)
+		if (!target)
 		{
-			Debug.LogWarning(gameObject.name + "Target object cannot be null!");
-			this.enabled = false;
+			throw new System.Exception(gameObject.name + ": Trigger target cannot be null!");
 		}
 
 		Component[] components = target.GetComponents(typeof(Component));
@@ -30,8 +29,7 @@ public class Trigger : MonoBehaviour {
 			}
 		}
 
-		Debug.LogWarning(gameObject + " Improper Target type set! Turning off script!");
-		this.enabled = false;
+		throw new System.Exception(gameObject.name + ": Trigger target has no Triggerable script!");
 	}
 
 	private void OnTriggerEnter(Collider other)

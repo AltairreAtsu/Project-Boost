@@ -81,16 +81,15 @@ public partial class RocketShip : MonoBehaviour {
 
 	}
 
+
+
 	#region Collision and Trigger Handling
 	private void OnCollisionEnter(Collision collision)
     {
-		if (state != State.Alive || invulnerable) { return; }
+		if (state != State.Alive || invulnerable || collision.gameObject.tag == "Friendly") { return; }
 
         switch (collision.gameObject.tag)
 		{
-			case "Friendly":
-				print("Okay!");
-				break;
 			case "Finish":
 				StartSucessSequence();
 				break;
@@ -266,7 +265,9 @@ public partial class RocketShip : MonoBehaviour {
 		deathParticles.Play();
 		Physics.gravity = originalGravity;
 		state = State.Dying;
+
 		levelManager.Invoke("ReloadLevel", loadDelay + deathSfx.length);
+		
 	}
 	#endregion
 

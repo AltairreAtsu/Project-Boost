@@ -18,7 +18,6 @@ public class OpeningAndClosing : MonoBehaviour, ITriggerable {
 	private Vector3 startingPositionBottom = Vector3.zero;
 	private Vector3 endingPointTop = Vector3.zero;
 	private Vector3 endingPointBottom = Vector3.zero;
-	Vector3 middlePoint = Vector3.zero;
 
 	private float lastStep = 0f;
 
