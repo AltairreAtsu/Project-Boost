@@ -1896,8 +1896,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f9a6beaee442340b348f8cc053f44f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 954671825}
-  deTrigger: 0
+  targets:
+  - target: {fileID: 954671825}
+    deTrigger: 0
 --- !u!1001 &807989195
 Prefab:
   m_ObjectHideFlags: 0
