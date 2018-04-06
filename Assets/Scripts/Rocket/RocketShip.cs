@@ -78,7 +78,6 @@ public partial class RocketShip : MonoBehaviour {
 			if (Application.isEditor)
 				RespondToDebugInput();
 		}
-
 	}
 
 
@@ -86,9 +85,13 @@ public partial class RocketShip : MonoBehaviour {
 	#region Collision and Trigger Handling
 	private void OnCollisionEnter(Collision collision)
     {
-		if (state != State.Alive || invulnerable || collision.gameObject.tag == "Friendly") { return; }
+		GameObject hit = collision.collider.gameObject;
+		if (state != State.Alive || invulnerable || hit.tag == "Friendly") { return; }
 
-        switch (collision.gameObject.tag)
+		
+		print(hit.name);
+
+        switch (hit.gameObject.tag)
 		{
 			case "Finish":
 				StartSucessSequence();
@@ -253,6 +256,10 @@ public partial class RocketShip : MonoBehaviour {
 		audioSource.PlayOneShot(jingleSfx);
 		sucessParticles.Play();
 		state = State.Trancending;
+
+		rigidBody.angularVelocity = Vector3.zero;
+		rigidBody.velocity = Vector3.zero;
+
 		levelManager.Invoke("LoadNextScene", loadDelay + jingleSfx.length);
 	}
 
