@@ -11,8 +11,15 @@ public class OpeningAndClosing : MonoBehaviour, ITriggerable {
 	[SerializeField] private float closingTime = 1f;
 	[SerializeField] private float delayTime = 1f;
 	[Space]
+	[Tooltip ("Wether a door is active at the start or not. If not active it will either remain closed or open depending ont he closed at start variable.")]
 	[SerializeField] private bool active = true;
+	[Tooltip("When a door is set as Lock and Key, it skips the delay state and remains in eithier opening or closing states.")]
 	[SerializeField] private bool lockAndKey = false;
+	[Tooltip ("Whether a door is closed at the start of the game when set as inactive.")]
+	[SerializeField] private bool closedAtStart = false;
+	[Tooltip ("Whether a door is closed by trigger or simply pausing in it's place.")]
+	[SerializeField] private bool closeOnDeTrigger = false;
+	
 
 	private Vector3 startingPositionTop = Vector3.zero;
 	private Vector3 startingPositionBottom = Vector3.zero;
@@ -22,7 +29,6 @@ public class OpeningAndClosing : MonoBehaviour, ITriggerable {
 	private float lastStep = 0f;
 
 	private bool opening = false;
-	
 
 	private enum State { Converging, Diverging, Delay }
 	private State state = State.Converging;
@@ -38,11 +44,15 @@ public class OpeningAndClosing : MonoBehaviour, ITriggerable {
 
 		lastStep = Time.time;
 
-		if (!active)
+		if (!active && closedAtStart)
 		{
 			state = State.Delay;
 			topWall.position = endingPointTop;
 			bottomWall.position = endingPointBottom;
+		}
+		else
+		{
+			state = State.Delay;
 		}
 	}
 	
@@ -135,8 +145,17 @@ public class OpeningAndClosing : MonoBehaviour, ITriggerable {
 
 	public void DeTrigger()
 	{
-		active = false;
-		lastStep = Time.time;
+		if (!closeOnDeTrigger)
+		{
+			active = false;
+			lastStep = Time.time;
+		}
+		else
+		{
+			lastStep = Time.time;
+			state = State.Converging;
+		}
+
 	}
 
 	public bool IsTriggered()
