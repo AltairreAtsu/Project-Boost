@@ -1,0 +1,10 @@
+diff a/Assets/ProCore/ProBuilder/Data/ProBuilderPreferences.asset b/Assets/ProCore/ProBuilder/Data/ProBuilderPreferences.asset	(rejected hunks)
+@@ -13,6 +13,8 @@
+   m_EditorClassIdentifier: 
+   m_Bool_keys:
+   - pbUVMaterialPreview
++  - pb_SmoothingGroupEditor::m_ShowPreview
++  - pb_SmoothingGroupEditor::m_DrawNormals
+   m_Int_keys:
+   - pbDefaultEditLevel
+   - pbDefaultSelectionMode
