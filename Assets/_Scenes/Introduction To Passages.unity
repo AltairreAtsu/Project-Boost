@@ -5283,6 +5283,8 @@ MonoBehaviour:
   delayTime: 1
   active: 0
   lockAndKey: 1
+  closedAtStart: 1
+  closeOnDeTrigger: 0
 --- !u!4 &915616725 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4059986040407624, guid: 28eab68002255dd45bbe357b7c9845e8,
@@ -5865,6 +5867,8 @@ MonoBehaviour:
   delayTime: 1
   active: 1
   lockAndKey: 0
+  closedAtStart: 0
+  closeOnDeTrigger: 0
 --- !u!1001 &1268271196
 Prefab:
   m_ObjectHideFlags: 0
@@ -6240,6 +6244,8 @@ MonoBehaviour:
   delayTime: 1
   active: 1
   lockAndKey: 0
+  closedAtStart: 0
+  closeOnDeTrigger: 0
 --- !u!1001 &1424303637
 Prefab:
   m_ObjectHideFlags: 0
@@ -7210,6 +7216,8 @@ MonoBehaviour:
   delayTime: 1
   active: 1
   lockAndKey: 0
+  closedAtStart: 0
+  closeOnDeTrigger: 0
 --- !u!1 &2032320801
 GameObject:
   m_ObjectHideFlags: 0
@@ -7350,6 +7358,8 @@ MonoBehaviour:
   delayTime: 1
   active: 1
   lockAndKey: 0
+  closedAtStart: 0
+  closeOnDeTrigger: 0
 --- !u!4 &2118488549 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4059986040407624, guid: 28eab68002255dd45bbe357b7c9845e8,

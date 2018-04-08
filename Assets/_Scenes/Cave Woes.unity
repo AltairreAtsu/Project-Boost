@@ -1735,7 +1735,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1984593633638290, guid: eeb05b4e9dfe06440abdca82baf5a77e, type: 2}
       propertyPath: m_Name
-      value: Moving Door (1)
+      value: Lock And Key
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: eeb05b4e9dfe06440abdca82baf5a77e, type: 2}
@@ -1778,6 +1778,8 @@ MonoBehaviour:
   delayTime: 1
   active: 0
   lockAndKey: 1
+  closedAtStart: 1
+  closeOnDeTrigger: 0
 --- !u!1001 &855415440
 Prefab:
   m_ObjectHideFlags: 0
@@ -4403,6 +4405,8 @@ MonoBehaviour:
   delayTime: 1
   active: 1
   lockAndKey: 0
+  closedAtStart: 0
+  closeOnDeTrigger: 0
 --- !u!4 &2136350281 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4586681494702440, guid: eeb05b4e9dfe06440abdca82baf5a77e,
