@@ -18,7 +18,7 @@ public partial class RocketShip : MonoBehaviour {
 	private bool invulnerable = false;
 
 	private bool inWater = false;
-	private Vector3 originalGravity = Vector3.zero;
+	private Vector3 originalGravity = new Vector3(0f, -9.81f, 0f);
 
 	private enum State { Alive, Dying, Trancending }
 	private State state = State.Alive;
@@ -65,7 +65,6 @@ public partial class RocketShip : MonoBehaviour {
         rigidBody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
 		levelManager = GetComponent<LevelManager>();
-		originalGravity = Physics.gravity;
 	}
 	
 	void Update () {
@@ -259,6 +258,8 @@ public partial class RocketShip : MonoBehaviour {
 
 		rigidBody.angularVelocity = Vector3.zero;
 		rigidBody.velocity = Vector3.zero;
+
+		Physics.gravity = originalGravity;
 
 		levelManager.Invoke("LoadNextScene", loadDelay + jingleSfx.length);
 	}
