@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_Scenes/Splash.unity
+    guid: f109a65b0b32d124e8f5c6aa49520a1b
+  - enabled: 1
     path: Assets/_Scenes/Start.unity
     guid: 9116d49919fc19e42a58664b18d39fc3
   - enabled: 1
@@ -14,7 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Introduction to Slider.unity
     guid: dc37d34d88c782d4db89cdebaf1ea42f
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Ventilation Shaft.unity
     guid: cad14e9e86ec9b9488ce8b1e3f5ccfc6
   - enabled: 1
@@ -29,7 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Introduction to Fire.unity
     guid: 50e9c9482713c5349ba33dcb41832677
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/Key Ponf.unity
     guid: ad4d01406f6a3d947b6e5e0bfe2bab0b
   - enabled: 1
